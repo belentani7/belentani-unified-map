@@ -40,10 +40,28 @@ def main(argv: list[str]) -> int:
 
     raw = json.loads(in_path.read_text(encoding="utf-8"))
     data = raw.get("data") or {}
+    chats = data if isinstance(data, list) else (data.get("messages") or [])
 
-    chats = data.get("messages") or []
-    titles = [clean(str(t)) for t in (data.get("title") or "").split("\n") if str(t).strip()]
-    types = [clean(str(t)) for t in (data.get("chat_type") or "").split() if str(t).strip()]
+    titles: list[str] = []
+    types: list[str] = []
+    models_seen: set[str] = set()
+    created_at = updated_at = ""
+    for conv in chats:
+        if not isinstance(conv, dict):
+            continue
+        title = clean(str(conv.get("title") or ""))
+        if title and title not in titles:
+            titles.append(title)
+        meta = conv.get("meta") or {}
+        if isinstance(meta, dict):
+            ctype = clean(str(meta.get("chat_type") or ""))
+            if ctype:
+                types.append(ctype)
+        for m in conv.get("models") or []:
+            if str(m).strip():
+                models_seen.add(clean(str(m)))
+        created_at = created_at or str(conv.get("created_at") or "")
+        updated_at = updated_at or str(conv.get("updated_at") or "")
 
     stats = {
         "source": in_path.name,
@@ -51,11 +69,9 @@ def main(argv: list[str]) -> int:
         "total_conversations": len(chats),
         "titles": titles,
         "chat_types": Counter(types),
-        "models_seen": sorted(
-            {clean(str(m)) for m in (data.get("models") or []) if str(m).strip()}
-        ),
-        "created_at": data.get("created_at"),
-        "updated_at": data.get("updated_at"),
+        "models_seen": sorted(models_seen),
+        "created_at": created_at,
+        "updated_at": updated_at,
         "note": "stats only - message bodies were never extracted (privacy + secrets)",
     }
     (out_dir / "chat-export-stats.json").write_text(
