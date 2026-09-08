@@ -1,0 +1,24 @@
+﻿{
+  "checked": "2026-09-08",
+  "live": [
+    {"url": "https://belentani-judas.vercel.app", "status": 200, "project": "BELENTANI Judas Experience OS"},
+    {"url": "https://ux-academy-professional-program.vercel.app", "status": 200, "project": "UX Academy Professional"},
+    {"url": "https://manosabiertas-seven.vercel.app", "status": 200, "project": "ManosAbiertas", "note": "Vercel Deployment Protection activada (login wall)"},
+    {"url": "https://belentani7.github.io", "status": 200, "project": "OMEGA CORE JUDAS_OS v12.0"}
+  ],
+  "dead_404": [
+    "https://linguaforge-belentani.netlify.app",
+    "https://linguaforge-belentani.surge.sh",
+    "https://linguaforge-belentani.vercel.app",
+    "https://manos-abiertas-belentani.netlify.app",
+    "https://manos-abiertas-belentani.surge.sh",
+    "https://manos-abiertas-belentani.vercel.app",
+    "https://manosabiertas-vercel.vercel.app"
+  ],
+  "github_pages": [
+    "https://belentani7.github.io/ManosAbiertas/",
+    "https://belentani7.github.io/linguaforge/",
+    "https://belentani7.github.io/ux-academy-professional-program/",
+    "https://belentani7.github.io/Netlify/"
+  ]
+}

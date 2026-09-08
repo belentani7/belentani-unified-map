@@ -1,0 +1,150 @@
+[
+  {
+    "repo": "belentani-monorepo",
+    "deploy_configs": [],
+    "workflows": [],
+    "committed_env_files": [],
+    "urls": [],
+    "secret_files": {},
+    "framework_hints": [
+      "turbo"
+    ]
+  },
+  {
+    "repo": "lingua-aberta",
+    "deploy_configs": [],
+    "workflows": [],
+    "committed_env_files": [
+      ".env.example"
+    ],
+    "urls": [],
+    "secret_files": {},
+    "framework_hints": [
+      "react",
+      "vite"
+    ]
+  },
+  {
+    "repo": "linguaforge",
+    "deploy_configs": [],
+    "workflows": [],
+    "committed_env_files": [],
+    "urls": [],
+    "secret_files": {},
+    "framework_hints": [
+      "react",
+      "vite"
+    ]
+  },
+  {
+    "repo": "linguaforge-v2",
+    "deploy_configs": [],
+    "workflows": [],
+    "committed_env_files": [],
+    "urls": [],
+    "secret_files": {},
+    "framework_hints": [
+      "react",
+      "vite"
+    ]
+  },
+  {
+    "repo": "manos-abiertas-release-netlify-20260812",
+    "deploy_configs": [
+      "netlify.toml"
+    ],
+    "workflows": [],
+    "committed_env_files": [],
+    "urls": [],
+    "secret_files": {},
+    "framework_hints": [
+      "next",
+      "react"
+    ]
+  },
+  {
+    "repo": "ManosAbiertas",
+    "deploy_configs": [
+      "ci:vercel-action",
+      "ci:netlify-action"
+    ],
+    "workflows": [
+      "deploy.yml"
+    ],
+    "committed_env_files": [
+      ".env.example"
+    ],
+    "urls": [],
+    "secret_files": {},
+    "framework_hints": [
+      "next",
+      "react"
+    ]
+  },
+  {
+    "repo": "manosabiertas-vercel-20260813",
+    "deploy_configs": [
+      "netlify.toml"
+    ],
+    "workflows": [],
+    "committed_env_files": [],
+    "urls": [],
+    "secret_files": {},
+    "framework_hints": [
+      "next",
+      "react"
+    ]
+  },
+  {
+    "repo": "maos-abertas-linguaforge",
+    "deploy_configs": [],
+    "workflows": [
+      "ci.yml"
+    ],
+    "committed_env_files": [],
+    "urls": [],
+    "secret_files": {},
+    "framework_hints": [
+      "react",
+      "vite"
+    ]
+  },
+  {
+    "repo": "Netlify",
+    "deploy_configs": [
+      "netlify.toml"
+    ],
+    "workflows": [
+      "ci.yml",
+      "deploy-pages.yml"
+    ],
+    "committed_env_files": [],
+    "urls": [
+      "https://app.netlify.com/start/deploy",
+      "https://docs.netlify.com/core/overview/",
+      "https://docs.netlify.com/frameworks/next-js/overview/",
+      "https://nextjs-platform-starter.netlify.app/",
+      "https://www.netlify.com/img/deploy/button.svg"
+    ],
+    "secret_files": {},
+    "framework_hints": [
+      "next",
+      "react"
+    ]
+  },
+  {
+    "repo": "ux-academy-professional-program",
+    "deploy_configs": [
+      "vercel.json",
+      "netlify.toml"
+    ],
+    "workflows": [],
+    "committed_env_files": [],
+    "urls": [],
+    "secret_files": {},
+    "framework_hints": [
+      "react",
+      "vite"
+    ]
+  }
+]
