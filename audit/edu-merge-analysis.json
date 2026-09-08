@@ -1,0 +1,127 @@
+{
+  "manosabiertas": {
+    "target": "ManosAbiertas",
+    "biggest": "ManosAbiertas-backup-v1",
+    "members": [
+      {
+        "repo": "ManosAbiertas-backup-v1",
+        "files": 1350,
+        "bytes": 55419254
+      },
+      {
+        "repo": "manos_abiertas_course_modules",
+        "files": 932,
+        "bytes": 17520646
+      },
+      {
+        "repo": "manosabiertas-vercel-20260813",
+        "files": 294,
+        "bytes": 6131160
+      },
+      {
+        "repo": "manos-abiertas-release-netlify-20260812",
+        "files": 271,
+        "bytes": 5942152
+      },
+      {
+        "repo": "manosabiertas-repo",
+        "files": 247,
+        "bytes": 3364782
+      },
+      {
+        "repo": "manosabiertas-38d5f",
+        "files": 202,
+        "bytes": 4272190
+      },
+      {
+        "repo": "clon-manosabiertas",
+        "files": 83,
+        "bytes": 3142705
+      },
+      {
+        "repo": "manosabiertas-optimizacion-2",
+        "files": 22,
+        "bytes": 2162746
+      },
+      {
+        "repo": "ManosAbiertas",
+        "files": 18,
+        "bytes": 1109295
+      },
+      {
+        "repo": "belentani-monorepo",
+        "files": 13,
+        "bytes": 67269
+      },
+      {
+        "repo": "manos-abiertas",
+        "files": 7,
+        "bytes": 125725
+      },
+      {
+        "repo": "manosabiertas-components",
+        "files": 6,
+        "bytes": 25443
+      },
+      {
+        "repo": "manos-abiertas-docs",
+        "files": 4,
+        "bytes": 3535
+      }
+    ]
+  },
+  "linguaforge": {
+    "target": "linguaforge",
+    "biggest": "linguaforge",
+    "members": [
+      {
+        "repo": "linguaforge",
+        "files": 230,
+        "bytes": 1330724
+      },
+      {
+        "repo": "maos-abertas-linguaforge",
+        "files": 177,
+        "bytes": 1110377
+      },
+      {
+        "repo": "linguaforge-v2",
+        "files": 163,
+        "bytes": 1209799
+      }
+    ]
+  },
+  "ux-academy": {
+    "target": "ux-academy-professional-program",
+    "biggest": "ux-academy-professional-program",
+    "members": [
+      {
+        "repo": "ux-academy-professional-program",
+        "files": 237,
+        "bytes": 3013918
+      }
+    ]
+  },
+  "lingua-aberta": {
+    "target": "lingua-aberta",
+    "biggest": "lingua-aberta",
+    "members": [
+      {
+        "repo": "lingua-aberta",
+        "files": 133,
+        "bytes": 857884
+      }
+    ]
+  },
+  "open-school": {
+    "target": "open-school",
+    "biggest": "open-school",
+    "members": [
+      {
+        "repo": "open-school",
+        "files": 6,
+        "bytes": 83708
+      }
+    ]
+  }
+}
