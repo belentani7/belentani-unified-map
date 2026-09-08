@@ -1,0 +1,100 @@
+BELENTANI GITHUB — UNIFIED VIEW (por logica, no por nombre)
+511 repos -> 11 dominios -> 358 familias
+
+├── BELENTANI-CORE (103)
+│   ├── belentani (13)
+│   │   └── DUPS: belentani.new, belentani_Omega, Belentani
+│   ├── belentani-omega (10)
+│   │   └── DUPS: belentani-omega-portal, belentani-omega-live, belentani-omega-template-audited
+│   ├── belentani-judas (4)
+│   │   └── DUPS: belentani-judas-era-omega
+│   ├── belentani-belentani7 (3)
+│   ├── belentani-cv (3)
+│   │   └── DUPS: Belentani.cv-ai-audited
+│   ├── belentani-forge (3)
+│   │   └── DUPS: belentani-video-forge
+│   └── … +55 familias
+├── PRODUCTS (67)
+│   ├── manos (8)
+│   ├── carquidec (5)
+│   │   └── DUPS: CARQUIDEC, carquidec-4, carquidec-3
+│   ├── natalia (5)
+│   │   └── DUPS: natalia-marinho-2, natalia-marinho
+│   ├── pedro (5)
+│   │   └── DUPS: pedro-belentani-blog-neural
+│   ├── nataliamarinho (4)
+│   │   └── DUPS: nataliamarinho-3, nataliamarinho, nataliamarinho-2
+│   ├── cruzando (3)
+│   │   └── DUPS: cruzando-el-charco-web, cruzando-el-charco-v2
+│   └── … +22 familias
+├── EXPERIMENTS (183)
+│   ├── 3d (3)
+│   ├── 03 (2)
+│   │   └── DUPS: 03-DUCK-WEB-build-everything
+│   ├── bounce (2)
+│   │   └── DUPS: bounce-x-loading-animation
+│   ├── cassandra (2)
+│   ├── css (2)
+│   ├── free (2)
+│   └── … +169 familias
+├── SKILLS-INFRA (25)
+│   ├── mimo (4)
+│   ├── claude-skills (3)
+│   │   └── DUPS: claude-skills, claude-skills-full
+│   ├── mimocode (3)
+│   ├── manus (2)
+│   ├── meta (2)
+│   ├── skills (2)
+│   └── … +8 familias
+├── JUDAS-ERA (7)
+│   ├── judas-experience (3)
+│   ├── judas-omega (2)
+│   │   └── DUPS: judas-omega-static-repo
+│   ├── judas-access (1)
+│   ├── judas-red (1)
+├── AION-WORKFORCE (32)
+│   ├── agent (4)
+│   ├── ai (4)
+│   ├── agentmail (3)
+│   ├── local (3)
+│   │   └── DUPS: local-agent-2, local-agent
+│   ├── nexus-workforce (2)
+│   ├── agentbox (1)
+│   └── … +15 familias
+├── DUCK-ECOSYSTEM (57)
+│   ├── duck-studio (12)
+│   │   └── DUPS: duck-full-studio-pro-2, duck-zion-studio, DUCK-STUDIO-LOCAL-WIN11
+│   ├── heyduck (7)
+│   │   └── DUPS: heyduck-4, heyduck-3, heyduck-2
+│   ├── duck-zion (6)
+│   │   └── DUPS: DUCK-ZION-PREMIUM-audited
+│   ├── duck-ecosystem (4)
+│   │   └── DUPS: duck-ecosystem-v2
+│   ├── duck-lab (4)
+│   ├── duck (3)
+│   │   └── DUPS: duck-2026, duck-2000
+│   └── … +18 familias
+├── BOOKS-DOCS (5)
+│   ├── docker (1)
+│   ├── libro-3000 (1)
+│   ├── libro-investigacion (1)
+│   ├── libro-vida (1)
+│   ├── registro (1)
+├── AI-COMPUTE (25)
+│   ├── music (3)
+│   │   └── DUPS: music-os-interface
+│   ├── comfy-comfyui (2)
+│   ├── failure (2)
+│   ├── omniroute (2)
+│   ├── codex-mesh (1)
+│   ├── codex-omega (1)
+│   └── … +14 familias
+├── VOICE-AI (6)
+│   ├── voice-bot (2)
+│   │   └── DUPS: voice-bot-saas-v2
+│   ├── voice-agency (1)
+│   ├── voice-assistant (1)
+│   ├── voice-saas (1)
+│   ├── voice-voicerestore (1)
+└── FORGE-OPS (1)
+    ├── forge-forge10 (1)

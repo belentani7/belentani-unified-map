@@ -1,0 +1,29 @@
+# Only session artifacts are tracked. Everything else in this directory
+# (7500+ files: apps/, archive/, artist/, clients/, infra/, packages/,
+# services/, skills/, tools/) is local workspace - NOT for git.
+
+# local workspace folders
+apps/
+archive/
+artist/
+clients/
+infra/
+packages/
+services/
+skills/
+tools/
+
+# secrets + regenerable data
+repos.json
+.env
+.env.*
+
+# python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
