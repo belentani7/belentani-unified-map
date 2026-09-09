@@ -1,0 +1,116 @@
+[
+  {
+    "repo": "ManosAbiertas",
+    "cursos": [
+      {
+        "slug": "alfabetizacion-ia",
+        "semanas": 3,
+        "quiz_items": 4
+      },
+      {
+        "slug": "office-sin-miedo",
+        "semanas": 3,
+        "quiz_items": 3
+      },
+      {
+        "slug": "falsos-amigos-pt-es",
+        "semanas": 4,
+        "quiz_items": 5
+      }
+    ],
+    "juegos": [
+      "juego_falsos_amigos.py",
+      "juego_mate_escape.py",
+      "juego_trilingue.py",
+      "juego_catalan.py",
+      "juego_super_quiz.py"
+    ],
+    "voces": [
+      "ca",
+      "en",
+      "es",
+      "pt"
+    ]
+  },
+  {
+    "repo": "lingua-aberta",
+    "cursos": [
+      {
+        "slug": "falsos-amigos-pt-es",
+        "semanas": 4,
+        "quiz_items": 5
+      },
+      {
+        "slug": "catalan-a1-brasileiros",
+        "semanas": 4,
+        "quiz_items": 5
+      },
+      {
+        "slug": "espanol-academico-eso",
+        "semanas": 3,
+        "quiz_items": 3
+      }
+    ],
+    "juegos": [
+      "juego_falsos_amigos.py",
+      "juego_mate_escape.py",
+      "juego_trilingue.py",
+      "juego_catalan.py",
+      "juego_super_quiz.py"
+    ],
+    "voces": [
+      "ca",
+      "en",
+      "es",
+      "pt"
+    ]
+  },
+  {
+    "repo": "ux-academy-professional-program",
+    "cursos": [
+      {
+        "slug": "ux-profesional",
+        "semanas": 6,
+        "quiz_items": 5
+      }
+    ],
+    "voces": [
+      "ca",
+      "en",
+      "es",
+      "pt"
+    ]
+  },
+  {
+    "repo": "linguaforge",
+    "cursos": [
+      {
+        "slug": "forja-linguistica",
+        "semanas": 4,
+        "quiz_items": 3
+      }
+    ],
+    "voces": [
+      "ca",
+      "en",
+      "es",
+      "pt"
+    ]
+  },
+  {
+    "repo": "open-school",
+    "cursos": [
+      {
+        "slug": "ciberseguridad-5-anios",
+        "semanas": 3,
+        "quiz_items": 3
+      }
+    ],
+    "voces": [
+      "ca",
+      "en",
+      "es",
+      "pt"
+    ]
+  }
+]
