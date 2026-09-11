@@ -34,15 +34,15 @@ MAX_PROMPT_CHARS = 600
 MAX_RESPUESTA_BYTES = 65536
 
 CAPSULAS = {
+    "pt": "Cápsula do dia: revise 5 falsos amigos PT->ES. 'Embaraçada' NÃO é "
+          "'embarazada': é 'avergonzada'. Um por dia, sem pressa.",
     "es": "Cápsula del día: un prompt útil es ROL + TAREA + CONTEXTO + FORMATO. "
           "Prueba: 'Actúa como orientador laboral. Dime 5 preguntas de "
           "entrevista para camarero en Barcelona. Responde en lista.'",
-    "ca": "Càpsula del dia: per aprendre català, escolta 10 minuts de Parla.cat "
-          "i repeteix en veu alta. La constància guanya a la intensitat.",
-    "pt": "Cápsula do dia: revise 5 falsos amigos PT->ES. 'Embaraçada' NÃO é "
-          "'embarazada': é 'avergonzada'. Um por dia, sem pressa.",
     "en": "Daily capsule: learn by evidence. After each lesson, write 3 lines "
           "in your own words. Teaching someone else is the fastest way to learn.",
+    "ca": "Càpsula del dia: per aprendre català, escolta 10 minuts de Parla.cat "
+          "i repeteix en veu alta. La constància guanya a la intensitat.",
 }
 
 
@@ -115,8 +115,10 @@ def tutor_issue() -> None:
 def capsula_diaria() -> None:
     hoy = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     d = datetime.now(timezone.utc)
-    langs = ["es", "ca", "pt", "en"]
-    lang = langs[d.day % len(langs)]
+    # Regla del ecosistema: pt > es > en (ca adicional). El dia 1 del mes
+    # arranca en portugues.
+    langs = ["pt", "es", "en", "ca"]
+    lang = langs[(d.day - 1) % len(langs)]
     carpeta = Path("campus/capsulas")
     carpeta.mkdir(parents=True, exist_ok=True)
     texto = CAPSULAS[lang]

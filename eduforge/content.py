@@ -10,6 +10,11 @@ Idiomas: ES / CA / PT / EN (voz humana por idioma via edge-tts/Kokoro).
 
 from __future__ import annotations
 
+# ============================ ORDEN DE IDIOMAS ==============================
+# Regla del ecosistema (fija): portugues primero, luego espanol, luego
+# ingles. El catalan se mantiene como idioma adicional, despues del EN.
+LANG_ORDER = ["pt", "es", "en", "ca"]
+
 # ============================ RECURSOS ABIERTOS ============================
 OPEN_BANKS = {
     "es": [

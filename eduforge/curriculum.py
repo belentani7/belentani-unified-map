@@ -45,18 +45,18 @@ REPO_COURSES = {
 }
 
 VOICE_SCRIPTS = {
-    "es": ("es-ES-ElviraNeural",
-           "Bienvenido a tu campus abierto. Aprende a tu ritmo, con material "
-           "gratuito y sin barreras."),
-    "ca": ("ca-ES-JoanaNeural",
-           "Benvingut al teu campus obert. Aprèn al teu ritme, amb material "
-           "gratuït i sense barreres."),
     "pt": ("pt-BR-FranciscaNeural",
            "Bem-vindo ao seu campus aberto. Aprenda no seu ritmo, com material "
            "gratuito e sem barreiras."),
+    "es": ("es-ES-ElviraNeural",
+           "Bienvenido a tu campus abierto. Aprende a tu ritmo, con material "
+           "gratuito y sin barreras."),
     "en": ("en-US-AriaNeural",
            "Welcome to your open campus. Learn at your own pace, with free "
            "materials and no barriers."),
+    "ca": ("ca-ES-JoanaNeural",
+           "Benvingut al teu campus obert. Aprèn al teu ritme, amb material "
+           "gratuït i sense barreres."),
 }
 
 
@@ -116,9 +116,12 @@ def _md_recursos(curso) -> str:
     if curso["idioma"] == "ca":
         langs |= {"es", "pt"}
     if curso["idioma"] == "es":
-        langs |= {"en"}
+        langs |= {"en", "pt"}
+    if curso["idioma"] == "pt":
+        langs |= {"es", "en"}
+    orden = content.LANG_ORDER  # regla del ecosistema: pt > es > en > ca
     bloques = []
-    for lang in sorted(langs):
+    for lang in sorted(langs, key=lambda l: orden.index(l) if l in orden else 99):
         if lang not in content.OPEN_BANKS:
             continue
         filas = "\n".join(
