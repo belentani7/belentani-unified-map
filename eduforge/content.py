@@ -517,3 +517,262 @@ _c(
          "correcta": 1, "explicacion": "PR-01: entrega verificable + pasantia + defensa publica."},
     ],
 )
+
+# ---------------- SECURE-T-UNIVERSITY: 4 cursos principales (la 2a sala) ----
+# Alineados con STORY.md: Ofensiva, Defensiva, IA Aplicada, Gobernanza.
+
+_c(
+    "ciber-ofensiva", "Ciberseguridad Ofensiva: Pensar como Atacante", "es",
+    "universitario", 60,
+    "Curso universitario de seguridad ofensiva con ética desde el día 1: "
+    "recon pasivo, OSINT, OWASP Top 10 y laboratorio con máquina vulnerable. "
+    "Se aprueba demostrando hallazgos documentados, nunca adivinando.",
+    ["Distinguir hacking ético de actividad delictiva",
+     "Ejecutar reconocimiento pasivo y OSINT sobre un objetivo autorizado",
+     "Explicar y reproducir los 10 riesgos web principales de OWASP",
+     "Redactar un informe de hallazgos con severidad y remediación"],
+    [
+        {"n": 1, "titulo": "Ética, legalidad y alcance del test",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Regla número uno: permiso escrito",
+             "texto": "Nada se prueba sin autorización expresa y alcance firmado. "
+                      "Referencias: Convenio de Budapest (arts. 2-6), Código Penal "
+                      "esp. (arts. 197-198), y el estándar de alcance 'rules of "
+                      "engagement'. Un pentest sin contrato es un delito."},
+            {"tipo": "ejercicio", "titulo": "Redacta tu carta de autorización",
+             "texto": "Plantilla: partes, objetivo, ventanas de tiempo, puntos de "
+                      "contacto, plan de escape ante incidente, firma."},
+            {"tipo": "lectura", "titulo": "Metodologías: PTES, OWASP WSTG, MITRE ATT&CK",
+             "texto": "PTES da las fases; WSTG orienta pruebas web; ATT&CK cataloga "
+                      "tácticas y técnicas del adversario real."}]},
+        {"n": 2, "titulo": "Reconocimiento pasivo y OSINT",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Ver sin tocar: footprinting pasivo",
+             "texto": "DNS, certificados (crt.sh), Wayback Machine, metadatos "
+                      "públicos, Google dorks. El 70% de la inteligencia útil "
+                      "no requiere enviar un solo paquete al objetivo."},
+            {"tipo": "ejercicio", "titulo": "Perfil OSINT de un dominio propio",
+             "texto": "Con tu propio dominio (o uno autorizado): subdominios, "
+                      "tecnologías visibles, emails corporativos expuestos, "
+                      "filtraciones en breech-db."}]},
+        {"n": 3, "titulo": "Los 10 riesgos web (OWASP Top 10)",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Inyección y control de acceso roto",
+             "texto": "SQLi y NoSQLi: input que se convierte en código. Broken "
+                      "Access Control: el servidor confía en el cliente. Son los "
+                      "dos defectos que más brechas reales causan."},
+            {"tipo": "ejercicio", "titulo": "Práctica guiada en laboratorio legal",
+             "texto": "OWASP Juice Shop / bWAPP en local: encuentra 3 "
+                      "vulnerabilidades del Top 10 y documenta reproducción."},
+            {"tipo": "lectura", "titulo": "SSRF, XSS y componentes obsoletos",
+             "texto": "El servidor pidiendo por ti (SSRF), el navegador del "
+                      "usuario como objetivo (XSS) y el CVE sin parchear."}]},
+        {"n": 4, "titulo": "Laboratorio final: máquina vulnerable + informe",
+         "lecciones": [
+            {"tipo": "proyecto", "titulo": "De recon a reporte en Metasploitable",
+             "texto": "Máquina vulnerable local (Metasploitable 2 o similar): "
+                      "recon, explotación de 2 vectores, escalada, evidencia "
+                      "capturada. Solo en red local propia."},
+            {"tipo": "examen", "titulo": "Informe ético evaluado",
+             "texto": "Formato ejecutivo + técnico: hallazgo, severidad CVSS, "
+                      "reproducción paso a paso, remediación."}]},
+    ],
+    [
+        {"pregunta": "Lo primero en cualquier test ofensivo es...",
+         "opciones": ["Escanear agresivamente", "Obtener permiso escrito y alcance", "Instalar Metasploit", "Buscar 0-days"],
+         "correcta": 1, "explicacion": "Sin autorización expresa no hay test ético: hay delito."},
+        {"pregunta": "OWASP Top 10 es...",
+         "opciones": ["Una lista de antivirus", "Un ranking de riesgos de seguridad web", "Un firewall", "Una norma ISO"],
+         "correcta": 1, "explicacion": "Consenso comunitario sobre los 10 riesgos web más críticos."},
+        {"pregunta": "El OSINT pasivo se caracteriza por...",
+         "opciones": ["Enviar paquetes al objetivo", "No contactar directamente el objetivo", "Requerir exploits", "Ser ilegal siempre"],
+         "correcta": 1, "explicacion": "Recolecta información pública sin tocar la infraestructura del objetivo."},
+    ],
+)
+
+_c(
+    "ciber-defensiva", "Ciberseguridad Defensiva: Operar como SOC", "es",
+    "universitario", 60,
+    "Curso universitario de defensa: triada CIA, telemetría y logs, SIEM, "
+    "respuesta a incidentes NIST y hardening. El estudiante opera un mini-SOC "
+    "con casos reales despersonalizados.",
+    ["Aplicar la triada CIA para clasificar activos y controles",
+     "Configurar recolección de logs y detección básica en un SIEM abierto",
+     "Ejecutar el ciclo de respuesta a incidentes de NIST 800-61",
+     "Endurecer un servidor con matriz de hardening verificable"],
+    [
+        {"n": 1, "titulo": "Fundamentos: triada CIA y controles",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Confidencialidad, Integridad, Disponibilidad",
+             "texto": "Cada control se justifica por el riesgo que mitiga: "
+                      "cifrado (C), hashing y firma (I), redundancia (D). Mapa "
+                      "preventivo/detectivo/correctivo."},
+            {"tipo": "ejercicio", "titulo": "Clasifica 10 activos de una ONG ficticia",
+             "texto": "Impacto C/I/D por activo, control propuesto, costo "
+                      "aproximado. Se defiende en 5 minutos."}]},
+        {"n": 2, "titulo": "Telemetría: logs y detección",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "El log es el testigo",
+             "texto": "Fuentes: sistema, aplicación, red, identidad. Formato "
+                      "structured logging, retención legal, hora sincronizada "
+                      "(NTP) — sin hora correcta no hay correlación."},
+            {"tipo": "ejercicio", "titulo": "Mini-SOC con Wazuh o Security Onion",
+             "texto": "Instala en VM, conecta 2 agentes, genera 3 eventos "
+                      "(login fallido, escalada, malware EICAR) y detecta."}]},
+        {"n": 3, "titulo": "Respuesta a incidentes (NIST 800-61)",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Preparación → Detección → Contención → Erradicación → Recuperación → Lecciones",
+             "texto": "El ciclo no termina hasta el informe de lecciones "
+                      "aprendidas. Playbooks por escenario: ransomware, phish, "
+                      "cuenta comprometida."},
+            {"tipo": "ejercicio", "titulo": "Juego de mesa: incidente de ransomware",
+             "texto": "Rol de analista: cronología, decisiones de contención, "
+                      "comunicación, post-incidente."}]},
+        {"n": 4, "titulo": "Hardening y continuidad",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Superficie de ataque mínima",
+             "texto": "CIS Benchmarks: servicios innecesarios fuera, puertos "
+                      "cerrados, actualizaciones, MFA, backups 3-2-1 con prueba "
+                      "de restauración."},
+            {"tipo": "examen", "titulo": "Auditoría de hardening evaluada",
+             "texto": "Checklist CIS nivel 1 sobre una VM: evidencia antes/después."}]},
+    ],
+    [
+        {"pregunta": "La triada CIA significa...",
+         "opciones": ["Central Intelligence Agency", "Confidencialidad, Integridad, Disponibilidad", "Cifrado, Identidad, Acceso", "Control, Inspección, Auditoría"],
+         "correcta": 1, "explicacion": "Las tres propiedades que todo control protege."},
+        {"pregunta": "El ciclo NIST 800-61 termina con...",
+         "opciones": ["La contención", "El pago del rescate", "Lecciones aprendidas", "El reinicio"],
+         "correcta": 2, "explicacion": "Sin post-incidente el ciclo está incompleto."},
+        {"pregunta": "Backup 3-2-1 significa...",
+         "opciones": ["3 copias, 2 medios, 1 fuera de sitio", "3 firewalls, 2 DMZ, 1 VPN", "3 usuarios, 2 roles, 1 admin", "3 hashes, 2 claves, 1 token"],
+         "correcta": 0, "explicacion": "Tres copias en dos medios distintos y una copia externa."},
+    ],
+)
+
+_c(
+    "ia-aplicada-segura", "Inteligencia Artificial Aplicada y Segura", "es",
+    "universitario", 48,
+    "IA aplicada con seguridad como requisito, no como añadido: fundamentos "
+    "de ML, LLMs y prompt engineering responsable, ataques adversariales y "
+    "proyecto final de asistente educativo con salvaguardas.",
+    ["Explicar el ciclo de vida de un modelo de ML sin tecnicismos vacíos",
+     "Diseñar prompts y flujos con LLM de forma responsable y verificable",
+     "Identificar ataques adversariales, poisoning y prompt injection",
+     "Construir un mini-asistente educativo con salvaguardas documentadas"],
+    [
+        {"n": 1, "titulo": "Fundamentos de ML sin humo",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Datos → modelo → predicción → error",
+             "texto": "Entrenamiento vs inferencia. Sobreajuste en una frase: "
+                      "memorizar en vez de aprender. La calidad del dato gana "
+                      "al algoritmo elegante."},
+            {"tipo": "ejercicio", "titulo": "Clasificador de juguete",
+             "texto": "Con scikit-learn y un dataset abierto (iris o similar): "
+                      "entrena, mide, explica el error en lenguaje humano."}]},
+        {"n": 2, "titulo": "LLMs y prompt engineering responsable",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Cómo funciona un LLM (y qué no hace)",
+             "texto": "Predice el siguiente token; no 'sabe'. Alucinación como "
+                      "propiedad estadística. Contexto, temperatura, límites. "
+                      "Regla: la IA propone, la persona verifica."},
+            {"tipo": "ejercicio", "titulo": "Prompt ROL + TAREA + CONTEXTO + FORMATO",
+             "texto": "Construye 5 prompts educativos reales y compara "
+                      "respuestas con y sin estructura."}]},
+        {"n": 3, "titulo": "Ataques a sistemas de IA",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Adversarial, poisoning, prompt injection",
+             "texto": "Ejemplos con pegatina que engaña a la cámara, datos "
+                      "falsos que corrompen el entrenamiento, instrucciones "
+                      "ocultas que secuestran al asistente. OWASP Top 10 para LLM."},
+            {"tipo": "ejercicio", "titulo": "Inyección de prompt en laboratorio",
+             "texto": "Sobre un asistente propio (no de terceros): demuestra "
+                      "una inyección y luego la mitiga (sanitize, delimitadores, "
+                      "permisos mínimos)."}]},
+        {"n": 4, "titulo": "Proyecto: asistente educativo con salvaguardas",
+         "lecciones": [
+            {"tipo": "proyecto", "titulo": "Tutor de una lección del campus",
+             "texto": "Asistente que responde SOLO con material del curso "
+                      "(grounding), cita la fuente, se niega fuera de alcance "
+                      "y registra uso anónimo."},
+            {"tipo": "examen", "titulo": "Defensa del proyecto",
+             "texto": "Demo en vivo: 3 preguntas válidas, 2 intentos de abuso "
+                      "contenidos por las salvaguardas."}]},
+    ],
+    [
+        {"pregunta": "Un LLM 'alucina' porque...",
+         "opciones": ["Está roto", "Predice texto plausible, no verdad verificada", "Le falta internet", "Se entrena poco"],
+         "correcta": 1, "explicacion": "Genera la continuación estadística más plausible; la verificación es humana."},
+        {"pregunta": "El prompt injection consiste en...",
+         "opciones": ["Inyectar código SQL", "Instrucciones ocultas que cambian el comportamiento del modelo", "Robar la API key", "Cifrar el prompt"],
+         "correcta": 1, "explicacion": "Entrada no confiable que el sistema trata como instrucción de sistema."},
+        {"pregunta": "Grounding en un asistente significa...",
+         "opciones": ["Usar el modelo más grande", "Anclar respuestas a fuentes citadas", "Reducir la temperatura a 0", "Entrenar desde cero"],
+         "correcta": 1, "explicacion": "Responder solo a partir de material verificable y citarlo."},
+    ],
+)
+
+_c(
+    "gobernanza-compliance", "Gobernanza y Compliance Digital", "es",
+    "universitario", 40,
+    "Marcos de gobierno de la seguridad (ISO 27001, NIST CSF, ENS), "
+    "protección de datos con principio de minimización extrema, gestión de "
+    "riesgo y construcción del expediente de compliance con evidencia.",
+    ["Situar los marcos ISO 27001, NIST CSF y ENS en su papel real",
+     "Aplicar minimización de datos: el usuario como token anónimo",
+     "Construir una matriz de riesgo con tratamiento y dueño",
+     "Producir un expediente de compliance con evidencia verificable"],
+    [
+        {"n": 1, "titulo": "Marcos: ISO 27001, NIST CSF, ENS",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Para qué sirve cada marco",
+             "texto": "ISO 27001: sistema de gestión certificable. NIST CSF: "
+                      "cinco funciones (Identificar, Proteger, Detectar, "
+                      "Responder, Recuperar). ENS: esquema español por "
+                      "categorías. Un marco no es un checklist: es lenguaje "
+                      "común para decidir."},
+            {"tipo": "ejercicio", "titulo": "Mapea un control en los tres marcos",
+             "texto": "Elige 'gestión de accesos' y localiza su equivalente "
+                      "en ISO (A.9), CSF (PR.AC) y ENS."}]},
+        {"n": 2, "titulo": "Datos personales y minimización extrema",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "RGPD: base, finalidad, minimización",
+             "texto": "Solo se trata el dato necesario para la finalidad "
+                      "declarada. El máximo de minimización es no tener el "
+                      "dato: el usuario como token anónimo (patrón del "
+                      "ecosistema: uuid local, cero email, cero nombre)."},
+            {"tipo": "ejercicio", "titulo": "Rediseña un formulario sin PII",
+             "texto": "Toma un formulario real (registro de curso) y "
+                      "elimina todo dato identificativo innecesario: qué "
+                      "queda, qué se pierde, cómo se sigue dando el servicio."}]},
+        {"n": 3, "titulo": "Gestión de riesgo con dueño y evidencia",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Riesgo = probabilidad x impacto x activo",
+             "texto": "Apreto de riesgo en 4 tratamientos: mitigar, "
+                      "transferir, aceptar, eliminar. Todo riesgo tiene un "
+                      "dueño con nombre y una fecha de revisión."},
+            {"tipo": "ejercicio", "titulo": "Matriz de riesgo de la plataforma",
+             "texto": "8 riesgos reales (fuga de material, caída de CDN, "
+                      "abuso de API, token robado...): valora, trata, asigna."}]},
+        {"n": 4, "titulo": "El expediente de compliance",
+         "lecciones": [
+            {"tipo": "lectura", "titulo": "Sin evidencia no hay compliance",
+             "texto": "El expediente: inventario de activos, matriz de "
+                      "riesgo, políticas vigentes, registros de formación y "
+                      "de incidentes, revisiones firmadas."},
+            {"tipo": "examen", "titulo": "Expediente evaluado",
+             "texto": "Entrega el expediente del caso práctico del curso y "
+                      "defiéndelo: cada afirmación con su evidencia."}]},
+    ],
+    [
+        {"pregunta": "Las cinco funciones del NIST CSF son...",
+         "opciones": ["Planificar, Hacer, Verificar, Actuar", "Identificar, Proteger, Detectar, Responder, Recuperar", "Analizar, Diseñar, Desarrollar, Testear, Desplegar", "Prevenir, Curar, Paliar, Documentar, Auditar"],
+         "correcta": 1, "explicacion": "El ciclo de vida del CSF cubre gobierno y operación de la seguridad."},
+        {"pregunta": "La minimización extrema de datos significa...",
+         "opciones": ["Cifrar todo dos veces", "No tener el dato cuando el servicio puede funcionar sin él", "Guardar solo 30 días", "Anonimizar al administrador"],
+         "correcta": 1, "explicacion": "El dato que no existe no puede filtrarse: usuario como token anónimo."},
+        {"pregunta": "Los cuatro tratamientos de riesgo son...",
+         "opciones": ["Mitigar, transferir, aceptar, eliminar", "Comprar, vender, alquilar, donar", "Detectar, analizar, contener, reportar", "Alto, medio, bajo, nulo"],
+         "correcta": 0, "explicacion": "Todo riesgo se trata con una de esas cuatro decisiones y un dueño."},
+    ],
+)

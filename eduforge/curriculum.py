@@ -39,6 +39,9 @@ REPO_COURSES = {
     "ux-academy-professional-program": ["ux-profesional"],
     "linguaforge": ["forja-linguistica"],
     "open-school": ["ciberseguridad-5-anios"],
+    # 2a sala: la universidad de ciber/IA, con sus 4 cursos principales
+    "secure-t-university": ["ciber-ofensiva", "ciber-defensiva",
+                            "ia-aplicada-segura", "gobernanza-compliance"],
 }
 
 VOICE_SCRIPTS = {

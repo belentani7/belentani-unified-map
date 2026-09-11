@@ -24,7 +24,7 @@ from eduforge.agent import main as agent_main  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 REPOS = ["ManosAbiertas", "lingua-aberta", "ux-academy-professional-program",
-         "linguaforge", "open-school"]
+         "linguaforge", "open-school", "secure-t-university"]
 
 WORKFLOW = """name: tutor-ia
 

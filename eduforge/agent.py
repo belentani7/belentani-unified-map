@@ -20,11 +20,18 @@ import json
 import os
 import subprocess
 import sys
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+# Unico destino de red permitido (allowlist de un host, https, puerto estandar)
+AI_URL = "https://text.pollinations.ai/openai"
+# Minimizacion: el contexto saliente se trunca; no se envia mas de lo justo
+MAX_PROMPT_CHARS = 600
+MAX_RESPUESTA_BYTES = 65536
 
 CAPSULAS = {
     "es": "Cápsula del día: un prompt útil es ROL + TAREA + CONTEXTO + FORMATO. "
@@ -39,11 +46,26 @@ CAPSULAS = {
 }
 
 
+def _url_permitida(url: str) -> bool:
+    """SSRF-safe: solo https, host exacto de la allowlist, puerto estandar."""
+    p = urllib.parse.urlparse(url)
+    return (p.scheme == "https"
+            and p.hostname == "text.pollinations.ai"
+            and p.port in (None, 443))
+
+
 def pollinations(prompt: str) -> str | None:
-    """IA gratuita sin API key (fallback a banco local si falla)."""
+    """IA gratuita sin API key (fallback a banco local si falla).
+
+    La URL es constante y se valida contra la allowlist antes de abrir el
+    socket; el contexto saliente se trunca y la respuesta se lee con tope.
+    """
+    if not _url_permitida(AI_URL):
+        return None
+    prompt = prompt[:MAX_PROMPT_CHARS]
     try:
         req = urllib.request.Request(
-            "https://text.pollinations.ai/openai",
+            AI_URL,
             data=json.dumps({
                 "model": "openai",
                 "messages": [
@@ -54,8 +76,8 @@ def pollinations(prompt: str) -> str | None:
                 "temperature": 0.4,
             }).encode(),
             headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=60) as r:
-            data = json.loads(r.read().decode())
+        with urllib.request.urlopen(req, timeout=30) as r:
+            data = json.loads(r.read(MAX_RESPUESTA_BYTES).decode())
         msg = data["choices"][0]["message"]["content"].strip()
         return msg[:1500] or None
     except Exception:
