@@ -97,6 +97,10 @@ Ver [recursos.md](recursos.md) — bancos abiertos + Drive do Pobre.
 
 
 def _md_semana(curso, semana) -> str:
+    from eduforge.didactico import material as _mat
+    rico = _mat(curso["slug"], semana["n"])
+    if rico:
+        return _md_semana_rica(curso, semana, rico)
     lec = "\n\n".join(
         f"## {l['tipo'].upper()}: {l['titulo']}\n\n{l['texto']}"
         for l in semana["lecciones"])
@@ -109,6 +113,44 @@ Curso: [{curso['titulo']}](../syllabus.md) · Semana {semana['n']} de {len(curso
 ---
 [Volver al syllabus](../syllabus.md)
 """
+
+
+def _md_semana_rica(curso, semana, rico) -> str:
+    partes = [
+        f"# Semana {semana['n']}: {semana['titulo']}\n",
+        f"Curso: [{curso['titulo']}](../syllabus.md) · "
+        f"Semana {semana['n']} de {len(curso['semanas'])}\n",
+    ]
+    if rico.get("objetivos"):
+        partes.append("## Objetivos de aprendizaje\n")
+        partes.extend(f"- {o}" for o in rico["objetivos"])
+        partes.append("")
+    for sec in rico.get("secciones", []):
+        partes.append(f"## {sec['titulo']}\n")
+        partes.append(sec["contenido"])
+        if sec.get("referencias"):
+            partes.append("\n**Referencias:**")
+            partes.extend(f"- {r}" for r in sec["referencias"])
+        partes.append("")
+    cr = rico.get("caso_real")
+    if cr:
+        partes.append(f"## Caso real: {cr['titulo']}\n")
+        partes.append(cr["descripcion"])
+        partes.append("")
+    ej = rico.get("ejercicio")
+    if ej:
+        partes.append(f"## Ejercicio guiado: {ej['titulo']}\n")
+        for i, p in enumerate(ej["pasos"], 1):
+            partes.append(f"{i}. {p}")
+        partes.append("")
+    if rico.get("recursos"):
+        partes.append("## Recursos abiertos\n")
+        for nombre, url in rico["recursos"]:
+            partes.append(f"- [{nombre}]({url})")
+        partes.append("")
+    partes.append("---")
+    partes.append("[Volver al syllabus](../syllabus.md)")
+    return "\n".join(partes) + "\n"
 
 
 def _md_recursos(curso) -> str:

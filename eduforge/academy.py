@@ -278,7 +278,7 @@ def _html_curso(curso: dict, datos: dict) -> str:
         <span class="badge">{curso['idioma'].upper()} · {curso['nivel']}</span>
         <span class="badge">{curso['horas']} h</span>
         <span class="badge">{len(curso['semanas'])} semanas</span>
-        <span class="badge">quiz {len(curso['quiz'])} ítems</span>
+        <span class="badge">quiz {len(_quiz_combinado(curso))} ítems</span>
       </div>
       <p>{curso['descripcion']}</p>
       <h2>Objetivos de aprendizaje</h2>
@@ -292,7 +292,7 @@ proyecto con evidencia 40 %. Nada se aprueba adivinando.</blockquote>
 {semanas_html}
     <section id="quiz">
       <h2>Quiz del curso</h2>
-      <p class="t2">Checkpoint formativo: {len(curso['quiz'])} ítems con explicación.
+      <p class="t2">Checkpoint formativo: {len(_quiz_combinado(curso))} ítems con explicación.
 Al superar 70 %, márcalo en tu progreso.</p>
       <h3 id="q-titulo"></h3>
       <div class="quiz-opciones" id="q-opciones"></div>
@@ -320,10 +320,23 @@ Al superar 70 %, márcalo en tu progreso.</p>
     </section>
   </main>
 </div>
-{_quiz_player_js(curso['quiz'], curso['slug'])}
+{_quiz_player_js(_quiz_combinado(curso), curso['slug'])}
 </body>
 </html>
 """
+
+
+def _quiz_combinado(curso: dict) -> list:
+    """Combina quizzes de content.py + quizzes semanales de didactico.py."""
+    from eduforge.didactico import todos_los_quizzes
+    base = list(curso.get("quiz", []))
+    extra = todos_los_quizzes(curso["slug"])
+    vistos = {q["pregunta"] for q in base}
+    for q in extra:
+        if q["pregunta"] not in vistos:
+            base.append(q)
+            vistos.add(q["pregunta"])
+    return base
 
 
 def _md_idiomas(repo: str) -> str:
