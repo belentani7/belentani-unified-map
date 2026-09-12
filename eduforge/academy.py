@@ -16,13 +16,334 @@ Uso: python -m eduforge.academy [dir_repo] (por defecto secure-t-university)
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from eduforge import content  # noqa: E402
-from eduforge.curriculum import REPO_COURSES  # noqa: E402
+from eduforge.curriculum import (  # noqa: E402
+    REPO_COURSES, _md_recursos, _md_semana, _md_syllabus,
+)
+
+
+# ===================== MARKDOWN -> HTML (sin dependencias) ===================
+
+def _escapar(txt: str) -> str:
+    return txt.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def _inline(txt: str) -> str:
+    txt = _escapar(txt)
+    txt = re.sub(r"`([^`]+)`", r"<code>\1</code>", txt)
+    txt = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", txt)
+    txt = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"<em>\1</em>", txt)
+    txt = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', txt)
+    return txt
+
+
+def _md2html(md: str) -> str:
+    """Conversor determinista para el markdown que produce el propio motor:
+    títulos, listas, tablas, citas, código y párrafos."""
+    out: list[str] = []
+    lines = md.splitlines()
+    i = 0
+    while i < len(lines):
+        ln = lines[i]
+        s = ln.strip()
+        if not s:
+            i += 1
+            continue
+        if s.startswith("```"):
+            bloque: list[str] = []
+            i += 1
+            while i < len(lines) and not lines[i].strip().startswith("```"):
+                bloque.append(lines[i])
+                i += 1
+            i += 1
+            out.append("<pre><code>" + _escapar("\n".join(bloque)) + "</code></pre>")
+            continue
+        m = re.match(r"^(#{1,4})\s+(.*)$", s)
+        if m:
+            n = len(m.group(1))
+            out.append(f"<h{n}>{_inline(m.group(2))}</h{n}>")
+            i += 1
+            continue
+        if s.startswith(">"):
+            cita: list[str] = []
+            while i < len(lines) and lines[i].strip().startswith(">"):
+                cita.append(lines[i].strip().lstrip(">").strip())
+                i += 1
+            out.append("<blockquote>" + _inline(" ".join(c for c in cita if c)) + "</blockquote>")
+            continue
+        if s.startswith("|"):
+            tabla: list[str] = []
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                tabla.append(lines[i].strip())
+                i += 1
+            filas = [r for r in tabla if not re.match(r"^\|[\s:|-]+\|$", r)]
+            celdas = [[c.strip() for c in r.strip("|").split("|")] for r in filas]
+            if celdas:
+                thead = "".join(f"<th>{_inline(c)}</th>" for c in celdas[0])
+                tbody = "".join(
+                    "<tr>" + "".join(f"<td>{_inline(c)}</td>" for c in fila) + "</tr>"
+                    for fila in celdas[1:])
+                out.append(f"<table><thead><tr>{thead}</tr></thead><tbody>{tbody}</tbody></table>")
+            continue
+        if s.startswith(("- ", "* ")):
+            items: list[str] = []
+            while i < len(lines) and re.match(r"^\s*[-*]\s+", lines[i]):
+                items.append(re.sub(r"^\s*[-*]\s+", "", lines[i].strip()))
+                i += 1
+            out.append("<ul>" + "".join(f"<li>{_inline(it)}</li>" for it in items) + "</ul>")
+            continue
+        if re.match(r"^\d+[.)]\s+", s):
+            ol: list[str] = []
+            while i < len(lines) and re.match(r"^\s*\d+[.)]\s+", lines[i]):
+                ol.append(re.sub(r"^\s*\d+[.)]\s+", "", lines[i].strip()))
+                i += 1
+            out.append("<ol>" + "".join(f"<li>{_inline(it)}</li>" for it in ol) + "</ol>")
+            continue
+        if re.match(r"^-{3,}$", s):
+            out.append("<hr>")
+            i += 1
+            continue
+        parrafo = [s]
+        i += 1
+        while (i < len(lines) and lines[i].strip()
+               and not re.match(r"^(#|\||[-*]\s|\d+[.)]\s|>|```|---)", lines[i].strip())):
+            parrafo.append(lines[i].strip())
+            i += 1
+        out.append(f"<p>{_inline(' '.join(parrafo))}</p>")
+    return "\n".join(out)
+
+
+def _relink(html: str) -> str:
+    """Reescribe los enlaces del markdown fuente al contexto de la página
+    de curso (los .md son hermanos; la página vive en el mismo directorio)."""
+    html = html.replace('href="../syllabus.md"', 'href="#syllabus"')
+    html = html.replace('href="../credencial.html"', 'href="../../credencial.html"')
+    for pieza in ("laboratorio", "rubrica", "chuleta"):
+        html = html.replace(f'href="{pieza}.md"', f'href="#{pieza}"')
+    return html
+
+
+def _render(md: str) -> str:
+    return _relink(_md2html(md))
+
+
+# ===================== PÁGINA DE CURSO (LMS real) ===========================
+
+_CURSO_CSS = """\
+  <link rel="stylesheet" href="../../tokens.css">
+  <style>
+    .curso-layout { display: grid; grid-template-columns: 15rem 1fr; gap: var(--sp-8);
+      max-width: 72rem; margin: 0 auto; padding: var(--sp-6) var(--sp-4) var(--sp-12); }
+    .curso-nav { position: sticky; top: var(--sp-6); align-self: start;
+      display: grid; gap: var(--sp-1); font-size: var(--fs-sm); }
+    .curso-nav a { padding: var(--sp-2) var(--sp-3); border-radius: var(--r-sm);
+      color: var(--text-2); text-decoration: none; }
+    .curso-nav a:hover { background: var(--bg-muted); color: var(--text-1); }
+    .curso-nav a.activo { background: var(--accent-soft); color: var(--accent); }
+    .curso-nav .sep { border-top: 1px solid var(--border); margin: var(--sp-2) 0; }
+    main section { margin-bottom: var(--sp-12); scroll-margin-top: var(--sp-8); }
+    main h2 { border-bottom: 1px solid var(--border); padding-bottom: var(--sp-2); }
+    table { border-collapse: collapse; width: 100%; margin: var(--sp-4) 0; }
+    th, td { border: 1px solid var(--border); padding: var(--sp-2) var(--sp-3);
+      text-align: left; font-size: var(--fs-sm); }
+    th { background: var(--bg-muted); }
+    pre { background: var(--bg-sunken); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: var(--sp-4); overflow-x: auto; }
+    code { font-family: var(--font-mono); font-size: .9em; }
+    .meta-chips { display: flex; gap: var(--sp-2); flex-wrap: wrap; margin: var(--sp-3) 0; }
+    .quiz-opciones { display: grid; gap: var(--sp-2); margin: var(--sp-4) 0; }
+    .quiz-opciones button { text-align: left; padding: var(--sp-3) var(--sp-4);
+      border-radius: var(--r-md); border: 1px solid var(--border);
+      background: var(--bg-sunken); color: var(--text-1); font: inherit; cursor: pointer; }
+    .quiz-opciones button.correcta { border-color: var(--success); }
+    .quiz-opciones button.fallo { border-color: var(--danger); }
+    @media (max-width: 48rem) { .curso-layout { grid-template-columns: 1fr; }
+      .curso-nav { position: static; } }
+  </style>"""
+
+
+def _quiz_player_js(items: list[dict]) -> str:
+    data = json.dumps(items, ensure_ascii=False)
+    return f"""  <script>
+    const QUIZ = {data};
+    let qi = 0, score = 0;
+    const qt = document.getElementById('q-titulo');
+    const qo = document.getElementById('q-opciones');
+    const qf = document.getElementById('q-feedback');
+    const qm = document.getElementById('q-marcador');
+    const qb = document.getElementById('q-next');
+    function render() {{
+      const q = QUIZ[qi];
+      qt.textContent = (qi + 1) + '/' + QUIZ.length + ' · ' + q.pregunta;
+      qo.innerHTML = ''; qf.textContent = ''; qb.hidden = true;
+      q.opciones.forEach((o, i) => {{
+        const b = document.createElement('button');
+        b.textContent = o;
+        b.onclick = () => {{
+          [...qo.children].forEach((el, j) => {{
+            el.classList.add(j === q.correcta ? 'correcta' : 'fallo');
+            el.disabled = true;
+          }});
+          const ok = i === q.correcta;
+          if (ok) score++;
+          qf.textContent = (ok ? '✓ Correcto. ' : '✗ Incorrecto. ') + q.explicacion;
+          qm.textContent = 'Aciertos: ' + score;
+          qb.hidden = false;
+        }};
+        qo.appendChild(b);
+      }});
+    }}
+    qb.onclick = () => {{ qi++; qi < QUIZ.length ? render() : fin(); }};
+    function fin() {{
+      qt.textContent = 'Terminado: ' + score + '/' + QUIZ.length;
+      qo.innerHTML = ''; qm.textContent = '';
+      qf.textContent = score >= QUIZ.length * 0.7
+        ? 'Nivel superado — marca el quiz en tu progreso.'
+        : 'Repasa la semana y vuelve a intentarlo.';
+    }}
+    render();
+    // nav activa al hacer scroll
+    const links = [...document.querySelectorAll('.curso-nav a[href^="#"]')];
+    const io = new IntersectionObserver(ents => ents.forEach(e => {{
+      if (e.isIntersecting) links.forEach(a =>
+        a.classList.toggle('activo', a.getAttribute('href') === '#' + e.target.id));
+    }}), {{ rootMargin: '-30% 0px -60% 0px' }});
+    document.querySelectorAll('main section[id]').forEach(s => io.observe(s));
+  </script>"""
+
+
+def _html_curso(curso: dict, datos: dict) -> str:
+    semanas_nav = "\n".join(
+        f'      <a href="#semana-{s["n"]}">Semana {s["n"]} · {s["titulo"][:38]}…</a>'
+        if len(s["titulo"]) > 38 else
+        f'      <a href="#semana-{s["n"]}">Semana {s["n"]} · {s["titulo"]}</a>'
+        for s in curso["semanas"])
+    semanas_html = "\n".join(
+        f'    <section id="semana-{s["n"]}">\n{_render(_md_semana(curso, s))}\n    </section>'
+        for s in curso["semanas"])
+    objetivos = "".join(f"<li>{o}</li>" for o in curso["objetivos"])
+    lab = datos["laboratorio"]
+    return f"""<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{curso['titulo']} — Secure T University</title>
+  <meta name="description" content="{curso['descripcion'][:150]}">
+{_CURSO_CSS}
+</head>
+<body>
+<header class="topbar"><div class="bar">
+  <a class="brand" href="../../index.html">← Campus</a>
+  <span class="brand"><span>{curso['titulo'][:40]}</span></span>
+  <a class="btn" href="../../progreso.html">Mi progreso</a>
+</div></header>
+<div class="curso-layout">
+  <nav class="curso-nav" aria-label="Secciones del curso">
+      <a href="#overview">Overview</a>
+      <a href="#syllabus">Syllabus</a>
+{semanas_nav}
+      <div class="sep"></div>
+      <a href="#quiz">Quiz del curso</a>
+      <a href="#laboratorio">Laboratorio</a>
+      <a href="#proyecto">Proyecto y examen</a>
+      <a href="#rubrica">Rúbrica</a>
+      <a href="#glosario">Glosario</a>
+      <a href="#chuleta">Chuleta</a>
+      <a href="#recursos">Recursos</a>
+      <div class="sep"></div>
+      <a href="../../progreso.html">Mi progreso →</a>
+      <a href="../../credencial.html">Credencial →</a>
+  </nav>
+  <main>
+    <section id="overview">
+      <h1>{curso['titulo']}</h1>
+      <div class="meta-chips">
+        <span class="badge">{curso['idioma'].upper()} · {curso['nivel']}</span>
+        <span class="badge">{curso['horas']} h</span>
+        <span class="badge">{len(curso['semanas'])} semanas</span>
+        <span class="badge">quiz {len(curso['quiz'])} ítems</span>
+      </div>
+      <p>{curso['descripcion']}</p>
+      <h2>Objetivos de aprendizaje</h2>
+      <ul>{objetivos}</ul>
+      <blockquote>Evaluación: participación y ejercicios 30 % · quizzes 30 % ·
+proyecto con evidencia 40 %. Nada se aprueba adivinando.</blockquote>
+    </section>
+    <section id="syllabus">
+{_render(_md_syllabus(curso))}
+    </section>
+{semanas_html}
+    <section id="quiz">
+      <h2>Quiz del curso</h2>
+      <p class="t2">Checkpoint formativo: {len(curso['quiz'])} ítems con explicación.
+Al superar 70 %, márcalo en tu progreso.</p>
+      <h3 id="q-titulo"></h3>
+      <div class="quiz-opciones" id="q-opciones"></div>
+      <p class="feedback" id="q-feedback" aria-live="polite"></p>
+      <p class="marcador" id="q-marcador"></p>
+      <button class="btn" id="q-next" hidden>Siguiente</button>
+    </section>
+    <section id="laboratorio">
+{_render(_md_laboratorio(curso, datos))}
+    </section>
+    <section id="proyecto">
+{_render(_md_examen(curso, lab))}
+    </section>
+    <section id="rubrica">
+{_render(_md_rubrica(curso))}
+    </section>
+    <section id="glosario">
+{_render(_md_glosario(curso, datos))}
+    </section>
+    <section id="chuleta">
+{_render(_md_chuleta(curso, datos))}
+    </section>
+    <section id="recursos">
+{_render(_md_recursos(curso))}
+    </section>
+  </main>
+</div>
+{_quiz_player_js(curso['quiz'])}
+</body>
+</html>
+"""
+
+
+def _md_idiomas(repo: str) -> str:
+    return f"""# Idiomas del campus — estado real (sin traducciones falsas)
+
+Política del ecosistema: **PT → ES → EN** (+ català adicional). Esta matriz
+declara qué está traducido de verdad y qué no. Nada se marca como traducido
+sin estarlo.
+
+| Capa | PT | ES | EN | CA |
+|---|---|---|---|---|
+| Landing (portada pública) | VERIFIED | VERIFIED | VERIFIED | — |
+| Hub del campus (UI) | PLANNED | VERIFIED | PLANNED | PLANNED |
+| Páginas de curso (UI + estructura) | PLANNED | VERIFIED | PLANNED | PLANNED |
+| Contenido docente (lecciones, semanas) | PLANNED | VERIFIED (fuente) | PLANNED | PLANNED |
+| Quizzes | PLANNED | VERIFIED (fuente) | PLANNED | — |
+| Glosarios / chuletas / rúbricas | PLANNED | VERIFIED (fuente) | PLANNED | — |
+| Laboratorios | PLANNED | VERIFIED (fuente) | PLANNED | — |
+| Credencial / progreso / búsqueda (UI) | PLANNED | VERIFIED | PLANNED | — |
+| Voces de bienvenida | VERIFIED | VERIFIED | VERIFIED | VERIFIED |
+
+## Arquitectura para completarlo
+
+El contenido fuente vive en `content.CURSOS` (idioma ES, campo `idioma`).
+Para servir contenido multiidioma sin segundas fuentes de verdad, el motor
+soporta la convención de rutas `cursos/<slug>/<lang>/`: al añadir la
+traducción al dato fuente, el generador emite la variante bajo su idioma y
+esta matriz pasa la celda a VERIFIED. Hasta entonces, cada celda honesta
+dice PLANNED.
+"""
 
 # ===================== DATOS AUTORADOS POR CURSO =============================
 # clave -> {glosario: [(termino, definicion)], chuleta: str, laboratorio: dict}
@@ -458,7 +779,7 @@ def _html_progreso(repo: str) -> str:
     for slug in REPO_COURSES.get(repo, []):
         c = content.CURSOS[slug]
         items = ([f"semana-{s['n']:02d}" for s in c["semanas"]]
-                 + ["quiz", "proyecto"])
+                 + ["quiz", "laboratorio", "proyecto", "examen"])
         cursos.append({"slug": slug, "titulo": c["titulo"], "items": items})
     data = json.dumps(cursos, ensure_ascii=False)
     return f"""<!doctype html>
@@ -514,9 +835,19 @@ function pintar() {{
       const ok = !!estado[id]; if (ok) {{ done++; hechos++; }}
       total++;
       const nombre = it.startsWith("semana-") ? "Semana " + (+it.slice(7)) :
-        (it === "quiz" ? "Quiz del curso" : "Proyecto final");
-      return `<label class="progreso-item"><input type="checkbox"
-        data-id="${{id}}" ${{ok ? "checked" : ""}}> <span>${{nombre}}</span></label>`;
+        it === "quiz" ? "Quiz del curso" :
+        it === "laboratorio" ? "Laboratorio + evidencia" :
+        it === "proyecto" ? "Proyecto final" : "Examen final";
+      // gating: el examen se desbloquea con semanas + quiz + laboratorio
+      let bloqueado = false;
+      if (it === "examen") {{
+        bloqueado = c.items.filter(x => x !== "examen" && x !== "proyecto")
+          .some(x => !estado[c.slug + "/" + x]);
+      }}
+      return `<label class="progreso-item"${{bloqueado ? ' style="opacity:.45"' : ""}}>` +
+        `<input type="checkbox" data-id="${{id}}" ${{ok ? "checked" : ""}}` +
+        `${{bloqueado ? " disabled title=\\"Se desbloquea al completar semanas, quiz y laboratorio\\"" : ""}}>` +
+        ` <span>${{nombre}}${{bloqueado ? " 🔒" : ""}}</span></label>`;
     }}).join("");
     const pct = Math.round(done / c.items.length * 100);
     art.innerHTML = `<h3>${{c.titulo}}</h3>
@@ -599,7 +930,7 @@ def _html_credencial(repo: str) -> str:
   <h2 id="verificar">Verificar</h2>
   <p class="t2">Pega el bloque de credencial completo:</p>
   <textarea id="bloque" rows="8" placeholder='{{"v":1,"curso":"...",...}}'></textarea>
-  <div class="fila-botones"><button class="btn" id="verificar">Verificar sello</button></div>
+  <div class="fila-botones"><button class="btn" id="btn-verificar">Verificar sello</button></div>
   <div class="resultado" id="veredicto" hidden></div>
 </main>
 <script>
@@ -628,7 +959,7 @@ document.getElementById("sellar").onclick = async () => {{
     "\\n\\nBloque verificable (cópialo entero):\\n" +
     JSON.stringify(bloque, null, 2);
 }};
-document.getElementById("verificar").onclick = async () => {{
+document.getElementById("btn-verificar").onclick = async () => {{
   const v = document.getElementById("veredicto");
   try {{
     const b = JSON.parse(document.getElementById("bloque").value);
@@ -759,7 +1090,7 @@ def _construir_indice(campus: Path, repo: str) -> list[dict]:
         curso = next((s for s in desc_curso if s in rel), repo)
         indice.append({"titulo": titulo, "ruta": rel, "resumen": resumen,
                        "tags": f"{curso} · {md.stem}"})
-    # páginas interactivas
+    # páginas interactivas y páginas de curso
     indice += [
         {"titulo": "Progreso del estudiante", "ruta": "progreso.html",
          "resumen": "Seguimiento anónimo por token local, sin registro.", "tags": "progreso token"},
@@ -767,7 +1098,16 @@ def _construir_indice(campus: Path, repo: str) -> list[dict]:
          "resumen": "Genera y verifica sellos SHA-256 de cursos superados.", "tags": "credencial sello hash"},
         {"titulo": "Buscar en el campus", "ruta": "buscar.html",
          "resumen": "Búsqueda local en todo el material.", "tags": "busqueda"},
+        {"titulo": "Idiomas del campus", "ruta": "idiomas.md",
+         "resumen": "Matriz honesta PT/ES/EN/CA: qué está traducido y qué es PLANNED.", "tags": "idiomas i18n"},
     ]
+    for slug in REPO_COURSES.get(repo, []):
+        if (campus / "cursos" / slug / "index.html").exists():
+            c = content.CURSOS[slug]
+            indice.append({"titulo": f"{c['titulo']} — página del curso",
+                           "ruta": f"cursos/{slug}/index.html",
+                           "resumen": c["descripcion"][:140],
+                           "tags": f"{slug} curso lms"})
     return indice
 
 
@@ -791,9 +1131,12 @@ def generate(target_root: Path, repo_name: str) -> dict:
         (cdir / "chuleta.md").write_text(_md_chuleta(curso, datos), encoding="utf-8")
         (cdir / "laboratorio.md").write_text(_md_laboratorio(curso, datos),
                                              encoding="utf-8")
+        # página de curso LMS: todo el contenido renderizado, quiz embebido
+        (cdir / "index.html").write_text(_html_curso(curso, datos),
+                                         encoding="utf-8")
         report["cursos"].append({"slug": slug,
-                                 "piezas": ["rubrica", "examen", "glosario",
-                                            "chuleta", "laboratorio"]})
+                                 "piezas": ["index.html", "rubrica", "examen",
+                                            "glosario", "chuleta", "laboratorio"]})
 
     # capa 3+4 globales
     (campus / "progreso.html").write_text(_html_progreso(repo_name), encoding="utf-8")
@@ -808,6 +1151,10 @@ def generate(target_root: Path, repo_name: str) -> dict:
         (campus / "mapa-curricular.md").write_text(_md_mapa(repo_name),
                                                    encoding="utf-8")
         report["global"] += ["calendario.md", "mapa-curricular.md"]
+
+    # matriz honesta de idiomas (sin traducciones falsas)
+    (campus / "idiomas.md").write_text(_md_idiomas(repo_name), encoding="utf-8")
+    report["global"].append("idiomas.md")
 
     # índice de búsqueda (después de generar todo el material)
     indice = _construir_indice(campus, repo_name)

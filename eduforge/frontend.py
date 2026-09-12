@@ -310,10 +310,10 @@ def _index_html(repo_name: str, extras: set[str] | None = None,
         cursos.append(f"""
       <article class="card">
         <span class="badge">{c['idioma'].upper()} · {c['nivel']}</span>
-        <h3><a href="cursos/{slug}/syllabus.md">{c['titulo']}</a></h3>
+        <h3><a href="cursos/{slug}/index.html">{c['titulo']}</a></h3>
         <p>{c['descripcion'][:130]}…</p>
         <p class="meta">{len(c['semanas'])} semanas · {c['horas']} h · quiz {len(c['quiz'])} items</p>{enlaces_extra}
-        <div><a class="btn" href="cursos/{slug}/syllabus.md">Ver syllabus</a></div>
+        <div><a class="btn" href="cursos/{slug}/index.html">Entrar al curso</a></div>
       </article>""")
     voces = "\n".join(
         f'          <option value="{lang}">{lang.upper()}</option>'

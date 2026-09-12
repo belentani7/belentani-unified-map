@@ -25,6 +25,8 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from eduforge.curriculum import REPO_COURSES, VOICE_SCRIPTS  # noqa: E402
 
+MAX_RESPUESTA = 10 * 1024 * 1024  # tope de lectura: 10 MB de audio
+
 
 async def _edge_speak(voz: str, texto: str, out: Path) -> bool:
     try:
@@ -43,17 +45,29 @@ async def _kokoro_speak(voz: str, texto: str, out: Path,
                         api_key: str | None) -> bool:
     if not api_key:
         return False
+    import urllib.parse
     import urllib.request
+    # allowlist SSRF-safe: voz validada contra el banco interno; URL final
+    # se construye con urlencode (nunca interpolacion cruda) y se verifica
+    URL = ("https://router.huggingface.co/hf-inference/models/"
+           "hexgrad/Kokoro-82M")
+    if voz not in kokoro_voices().values():
+        return False
+    url = URL + "?" + urllib.parse.urlencode({"voice": voz})
+    p = urllib.parse.urlparse(url)
+    if p.scheme != "https" or p.hostname != "router.huggingface.co" \
+            or p.port not in (None, 443):
+        return False
     payload = json.dumps({"inputs": texto,
                           "options": {"use_cache": False}}).encode()
     req = urllib.request.Request(
-        f"https://router.huggingface.co/hf-inference/models/hexgrad/Kokoro-82M?voice={voz}",
+        url,
         data=payload,
         headers={"Authorization": f"Bearer {api_key}",
                  "Content-Type": "application/json"})
     try:
         with urllib.request.urlopen(req, timeout=120) as r:
-            out.write_bytes(r.read())
+            out.write_bytes(r.read(MAX_RESPUESTA))
         return out.stat().st_size > 1000
     except Exception:
         return False

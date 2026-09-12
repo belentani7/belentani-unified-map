@@ -36,7 +36,7 @@ OPEN_BANKS = {
         ("Khan Academy PT", "https://pt.khanacademy.org", "matematicas, ciencias"),
         ("Wikilivros PT", "https://pt.wikibooks.org", "libros abiertos"),
         ("Forvo PT", "https://pt.forvo.com", "pronunciacion real"),
-        ("Portal Domínio Público", "http://www.dominiopublico.gov.br", "obras libres BR"),
+        ("Portal Domínio Público", "https://www.dominiopublico.gov.br", "obras libres BR"),
         ("Ciberdúvidas", "https://ciberduvidas.iscte-iul.pt", "dudas de portugues"),
     ],
     "en": [
