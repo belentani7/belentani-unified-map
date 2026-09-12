@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install
+        run: |
+          if [ -f package.json ]; then npm ci; fi
+          if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; fi
+      - name: Lint
+        run: |
+          if [ -f package.json ] && grep -q '"lint"' package.json; then npm run lint; fi
+      - name: Test
+        run: |
+          if [ -f package.json ] && grep -q '"test"' package.json; then npm test; fi
+      - name: Build
+        run: |
+          if [ -f package.json ] && grep -q '"build"' package.json; then npm run build; fi
+
+  python-test:
+    runs-on: ubuntu-latest
+    if: hashFiles('**/requirements.txt') != '' || hashFiles('**/pyproject.toml') != ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f pyproject.toml ]; then pip install -e .; fi
+      - name: Test
+        run: |
+          if [ -d tests ]; then python -m pytest -q; fi
