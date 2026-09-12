@@ -291,21 +291,48 @@ self.addEventListener('fetch', e => {
 """
 
 
-def _index_html(repo_name: str) -> str:
+def _index_html(repo_name: str, extras: set[str] | None = None,
+                globales: bool = False, gobierno: bool = False) -> str:
+    extras = extras or set()
     cursos = []
     for slug in REPO_COURSES.get(repo_name, []):
         c = content.CURSOS[slug]
+        enlaces_extra = ""
+        if slug in extras:
+            enlaces_extra = (f"""
+        <p class="meta">
+          <a href="cursos/{slug}/glosario.md">Glosario</a> ·
+          <a href="cursos/{slug}/chuleta.md">Chuleta</a> ·
+          <a href="cursos/{slug}/laboratorio.md">Laboratorio</a> ·
+          <a href="cursos/{slug}/rubrica.md">Rúbrica</a> ·
+          <a href="cursos/{slug}/examen.md">Examen final</a>
+        </p>""")
         cursos.append(f"""
       <article class="card">
         <span class="badge">{c['idioma'].upper()} · {c['nivel']}</span>
         <h3><a href="cursos/{slug}/syllabus.md">{c['titulo']}</a></h3>
         <p>{c['descripcion'][:130]}…</p>
-        <p class="meta">{len(c['semanas'])} semanas · {c['horas']} h · quiz {len(c['quiz'])} items</p>
+        <p class="meta">{len(c['semanas'])} semanas · {c['horas']} h · quiz {len(c['quiz'])} items</p>{enlaces_extra}
         <div><a class="btn" href="cursos/{slug}/syllabus.md">Ver syllabus</a></div>
       </article>""")
     voces = "\n".join(
         f'          <option value="{lang}">{lang.upper()}</option>'
         for lang in ("es", "ca", "pt", "en"))
+    nav_extra = (
+        '\n      <a class="btn btn-ghost" href="buscar.html">Buscar</a>'
+        '\n      <a class="btn btn-ghost" href="progreso.html">Progreso</a>'
+        '\n      <a class="btn btn-ghost" href="credencial.html">Credencial</a>'
+        if globales else "")
+    seccion_gobierno = (
+        """
+    <section id="gobierno" aria-label="Gobierno académico">
+      <h2>Gobierno académico</h2>
+      <p class="meta">
+        <a href="calendario.md">Calendario académico (4 años)</a> ·
+        <a href="mapa-curricular.md">Mapa curricular NICE/CAE</a>
+      </p>
+    </section>
+""" if gobierno else "")
     return f"""<!doctype html>
 <html lang="es">
 <head>
@@ -324,7 +351,7 @@ def _index_html(repo_name: str) -> str:
     <nav aria-label="Principal">
       <a class="btn btn-ghost" href="#cursos">Cursos</a>
       <a class="btn btn-ghost" href="#quiz">Quiz</a>
-      <a class="btn btn-ghost" href="#voz">Voz IA</a>
+      <a class="btn btn-ghost" href="#voz">Voz IA</a>{nav_extra}
     </nav>
   </header>
 
@@ -364,7 +391,7 @@ def _index_html(repo_name: str) -> str:
       <p class="meta">Voces generadas por edge-tts (gratuito) o Kokoro vía
       Hugging Face. Sin coste, con acento humano real.</p>
     </section>
-
+{seccion_gobierno}
     <section id="agente" aria-label="Agente tutor">
       <h2>Agente tutor vivo en GitHub</h2>
       <p>Este campus tiene un agente IA que vive en GitHub Actions
@@ -399,8 +426,13 @@ def generate(target_root: Path, repo_name: str) -> None:
     (campus / "tokens.css").write_text(TOKENS_CSS, encoding="utf-8")
     (campus / "app.js").write_text(APP_JS, encoding="utf-8")
     (campus / "sw.js").write_text(SW_JS, encoding="utf-8")
-    (campus / "index.html").write_text(_index_html(repo_name),
-                                       encoding="utf-8")
+    (campus / "index.html").write_text(
+        _index_html(repo_name,
+                    extras={s for s in REPO_COURSES.get(repo_name, [])
+                            if (campus / "cursos" / s / "glosario.md").exists()},
+                    globales=(campus / "progreso.html").exists(),
+                    gobierno=(campus / "mapa-curricular.md").exists()),
+        encoding="utf-8")
     manifest = {
         "name": f"Campus {repo_name}",
         "short_name": repo_name,

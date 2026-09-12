@@ -1,20 +1,14 @@
 {
-  "ManosAbiertas": [
-    {
-      "idioma": "es",
-      "archivo": "bienvenida-es.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "ca",
-      "archivo": "bienvenida-ca.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
+  "secure-t-university": [
     {
       "idioma": "pt",
       "archivo": "bienvenida-pt.mp3",
+      "ok": true,
+      "metodo": "edge-tts"
+    },
+    {
+      "idioma": "es",
+      "archivo": "bienvenida-es.mp3",
       "ok": true,
       "metodo": "edge-tts"
     },
@@ -23,108 +17,10 @@
       "archivo": "bienvenida-en.mp3",
       "ok": true,
       "metodo": "edge-tts"
-    }
-  ],
-  "lingua-aberta": [
-    {
-      "idioma": "es",
-      "archivo": "bienvenida-es.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
     },
     {
       "idioma": "ca",
       "archivo": "bienvenida-ca.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "pt",
-      "archivo": "bienvenida-pt.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "en",
-      "archivo": "bienvenida-en.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    }
-  ],
-  "ux-academy-professional-program": [
-    {
-      "idioma": "es",
-      "archivo": "bienvenida-es.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "ca",
-      "archivo": "bienvenida-ca.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "pt",
-      "archivo": "bienvenida-pt.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "en",
-      "archivo": "bienvenida-en.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    }
-  ],
-  "linguaforge": [
-    {
-      "idioma": "es",
-      "archivo": "bienvenida-es.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "ca",
-      "archivo": "bienvenida-ca.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "pt",
-      "archivo": "bienvenida-pt.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "en",
-      "archivo": "bienvenida-en.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    }
-  ],
-  "open-school": [
-    {
-      "idioma": "es",
-      "archivo": "bienvenida-es.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "ca",
-      "archivo": "bienvenida-ca.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "pt",
-      "archivo": "bienvenida-pt.mp3",
-      "ok": true,
-      "metodo": "edge-tts"
-    },
-    {
-      "idioma": "en",
-      "archivo": "bienvenida-en.mp3",
       "ok": true,
       "metodo": "edge-tts"
     }

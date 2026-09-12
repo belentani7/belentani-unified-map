@@ -23,7 +23,7 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from eduforge.curriculum import VOICE_SCRIPTS  # noqa: E402
+from eduforge.curriculum import REPO_COURSES, VOICE_SCRIPTS  # noqa: E402
 
 
 async def _edge_speak(voz: str, texto: str, out: Path) -> bool:
@@ -67,9 +67,8 @@ def kokoro_voices() -> dict:
 
 def main() -> int:
     clones = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(
-        r"C:\Users\USER\AppData\Local\Temp\opencode\audit-deploys")
-    repos = ["ManosAbiertas", "lingua-aberta", "ux-academy-professional-program",
-             "linguaforge", "open-school"]
+        r"C:\Users\USER\Documents")
+    repos = list(REPO_COURSES)  # todos los campus registrados (regla PT>ES>EN)
     hf_key = None
     hf_file = Path(r"C:\Users\USER\keyrotor\.hf_key")
     if hf_file.exists():
@@ -89,14 +88,16 @@ def main() -> int:
                 ok = asyncio.run(
                     _kokoro_speak(kokoro_voices()[lang], guion, out, hf_key))
                 metodo = "kokoro-hf"
-            if not ok:
-                out.write_text("", encoding="utf-8")
+            if not ok and out.exists():
+                # nunca dejar un mp3 vacío: el reproductor quedaría roto
+                out.unlink()
             done.append({"idioma": lang, "archivo": out.name,
-                         "ok": ok, "metodo": metodo})
+                         "ok": ok, "metodo": metodo if ok else "pendiente"})
         report[repo] = done
         ok_n = sum(1 for d in done if d["ok"])
         print(f"[{repo}] voces: {ok_n}/{len(done)} generadas")
-    out = Path(r"C:\Users\USER\belentani-unified\audit\edu-voice.json")
+    out = Path(__file__).resolve().parent.parent / "audit" / "edu-voice.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2),
                    encoding="utf-8")
     print(f"[+] {out}")

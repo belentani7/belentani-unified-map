@@ -19,7 +19,7 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from eduforge import curriculum, frontend, voice  # noqa: E402
+from eduforge import academy, curriculum, frontend, voice  # noqa: E402
 from eduforge.agent import main as agent_main  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
@@ -114,6 +114,8 @@ def main() -> int:
         print(f"\n=== {repo} ===")
         curriculum.generate(root, repo)
         print("  curriculum OK")
+        academy.generate(root, repo)
+        print("  academy OK (capas 2-4)")
         frontend.generate(root, repo)
         print("  frontend OK")
         install_agent(root)
