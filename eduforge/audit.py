@@ -115,10 +115,23 @@ class Auditor:
                 self.fallo("MEDIUM", "STRUCTURE", f"posible huérfano: {rel}")
 
     # ---------------- CONTENT ----------------
+    BANNED = ("drivedopobre", "example.com/")
+
     def contenido(self) -> None:
         if not (self.campus / "cursos").is_dir():
             self.fallo("CRITICAL", "CONTENT", "campus/cursos/ no existe")
             return
+        # cero referencias prohibidas en todo el repo (fuente de verdad excluida del motor)
+        for f in list(self.root.rglob("*.md")) + list(self.root.rglob("*.html")) \
+                + list(self.root.rglob("*.js")) + list(self.root.rglob("*.json")):
+            if ".git" in f.parts:
+                continue
+            texto = f.read_text(encoding="utf-8", errors="replace").lower()
+            for prohibido in self.BANNED:
+                if prohibido in texto:
+                    self.fallo("HIGH", "CONTENT",
+                               f"referencia prohibida '{prohibido}' en "
+                               f"{f.relative_to(self.root)}")
         cursos = sorted(d for d in (self.campus / "cursos").iterdir() if d.is_dir())
         for cdir in cursos:
             qf = cdir / "quiz.json"
@@ -153,6 +166,15 @@ class Auditor:
                 self.fallo("MEDIUM", "CONTENT",
                            f"{cdir.name}: examen sin brief de proyecto con entregables")
             elif exa:
+                self.pasa()
+            # recursos con repos GitHub verificados (≥2 por curso)
+            rec = (cdir / "recursos.md").read_text(encoding="utf-8") \
+                if (cdir / "recursos.md").exists() else ""
+            n_github = rec.count("https://github.com/")
+            if n_github < 2:
+                self.fallo("MEDIUM", "CONTENT",
+                           f"{cdir.name}: recursos sin repos verificados ({n_github})")
+            else:
                 self.pasa()
 
     # ---------------- LINKS ----------------

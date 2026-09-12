@@ -403,8 +403,8 @@ def _index_html(repo_name: str, extras: set[str] | None = None,
   </main>
 
   <footer class="wrap">
-    <p>Material abierto: Khan Academy · Parla.cat · GCF Global · MIT OCW ·
-    Drive do Pobre. Generado por edu-forge.</p>
+    <p>Material abierto y verificado: Khan Academy · Parla.cat · GCF Global ·
+    MIT OCW · OWASP WSTG · Juice Shop · freeCodeCamp. Generado por edu-forge.</p>
   </footer>
   <script>
     const sel = document.getElementById('idioma');

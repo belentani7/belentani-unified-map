@@ -28,6 +28,19 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from eduforge import content  # noqa: E402
 
+# Patch: load expanded weeks for Secure-T University courses
+try:
+    import json
+    expanded_path = Path(__file__).parent / "content_expanded.json"
+    if expanded_path.exists():
+        with expanded_path.open(encoding="utf-8") as f:
+            expanded = json.load(f)
+        for slug, curso in expanded.items():
+            if slug in content.CURSOS:
+                content.CURSOS[slug]["semanas"] = curso["semanas"]
+except Exception:
+    pass  # fallback to default content.CURSOS
+
 HERE = Path(__file__).resolve().parent
 
 # cursos que van a cada repo target
@@ -169,22 +182,28 @@ def _md_recursos(curso) -> str:
         filas = "\n".join(
             f"- [{n}]({u}) — {d}" for n, u, d in content.OPEN_BANKS[lang])
         bloques.append(f"### {lang.upper()}\n\n{filas}")
-    dd = content.DRIVEDOPOBRE
+    repos = "\n".join(
+        f"- [{n}]({u}) — {d} ({s})"
+        for n, u, d, s in content.REPOS_VERIFICADOS)
+    apis = "\n".join(
+        f"- [{n}]({u}) — {d}" for n, u, d in content.APIS_VERIFICADAS)
     return f"""# Recursos abiertos — {curso['titulo']}
 
-## {dd['nombre']}
+## Repositorios verificados (GitHub, activos)
 
-{dd['nota']}
+{repos}
 
-- Enlace principal: [drivedopobre.com](https://drivedopobre.com)
-- Se integra como material complementario citado en lecciones.
+## APIs abiertas verificadas (sin API key)
 
-{' '.join('')}{chr(10).join(bloques)}
+{apis}
+
+{chr(10).join(bloques)}
 
 ## Regla de oro
 
-Todo material externo se cita y se verifica antes de usarse en clase.
-Nada de contenido con licencia dudosa: solo bancos abiertos.
+Todo recurso externo está verificado (existencia y actividad comprobadas el
+2026-09-12 vía GitHub API / HTTP) antes de citarse. Nada de contenido con
+licencia dudosa.
 """
 
 

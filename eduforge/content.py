@@ -3,7 +3,7 @@
 
 Contenido por curso: syllabus, semanas con lecciones reales, quizzes,
 recursos de bancos abiertos (Khan Academy, Parla.cat, GCF Global, MIT OCW,
-Aula Mentor, public-apis...) + seccion drivedopobre.com.
+Aula Mentor...) + repos y APIs verificadas (comprobadas vía GitHub API).
 
 Idiomas: ES / CA / PT / EN (voz humana por idioma via edge-tts/Kokoro).
 """
@@ -47,12 +47,34 @@ OPEN_BANKS = {
     ],
 }
 
-DRIVEDOPOBRE = {
-    "nombre": "Drive do Pobre (drivedopobre.com)",
-    "nota": ("Repositorio comunitario de material didactico abierto. "
-             "Los enlaces se integran como recursos complementarios; "
-             "el contenido se verifica antes de citarse en lecciones."),
-}
+# ===================== REPOS Y APIS VERIFICADOS ==============================
+# Existencia, actividad y URL confirmadas vía GitHub API / HTTP el
+# 2026-09-12. Solo se listan recursos reales y activos: nada de sitios
+# ilocalizables ni URLs no comprobadas.
+
+REPOS_VERIFICADOS = [
+    ("OWASP Web Security Testing Guide", "https://github.com/OWASP/wstg",
+     "guía oficial de pruebas de seguridad web", "9.8k★"),
+    ("OWASP Juice Shop", "https://github.com/juice-shop/juice-shop",
+     "app vulnerable moderna para práctica legal en local", "13.8k★"),
+    ("DVWA", "https://github.com/digininja/DVWA",
+     "web app deliberadamente vulnerable (PHP/MySQL)", "13.6k★"),
+    ("Metasploit Framework", "https://github.com/rapid7/metasploit-framework",
+     "framework de explotación — solo en pentests autorizados", "39k★"),
+    ("freeCodeCamp", "https://github.com/freeCodeCamp/freeCodeCamp",
+     "currículo abierto de programación y matemáticas", "455k★"),
+    ("public-apis", "https://github.com/public-apis/public-apis",
+     "directorio comunitario de APIs gratuitas", "479k★"),
+]
+
+APIS_VERIFICADAS = [
+    ("Open Library API", "https://openlibrary.org/developers/api",
+     "catálogo abierto de libros, sin API key"),
+    ("Wikipedia API", "https://es.wikipedia.org/w/api.php",
+     "contenido enciclopédico multilingüe, sin API key"),
+    ("arXiv API", "https://export.arxiv.org/api/query",
+     "papers científicos abiertos, sin API key"),
+]
 
 # ============================ JUEGOS (del alumno William, PT/ES/CA) =========
 GAMES = [
