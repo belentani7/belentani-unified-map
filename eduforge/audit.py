@@ -338,10 +338,140 @@ class Auditor:
                 self.fallo("MEDIUM", "ACADEMIC", f"{slug}: quiz <6 items")
             self.pasa()
 
+    # ---------------- CSS ----------------
+    def css(self) -> None:
+        paginas = sorted(self.campus.rglob("*.html")) + [self.root / "index.html"]
+        for pag in paginas:
+            if not pag.exists():
+                continue
+            for hoja in re.findall(r'href="([^"]+\.css)"',
+                                   pag.read_text(encoding="utf-8", errors="replace")):
+                if hoja.startswith("http"):
+                    continue
+                if (pag.parent / hoja).exists():
+                    self.pasa()
+                else:
+                    self.fallo("HIGH", "CSS", f"{pag.name}: hoja inexistente {hoja}")
+        tokens = self.campus / "tokens.css"
+        if tokens.exists():
+            texto = tokens.read_text(encoding="utf-8")
+            if "focus-visible" in texto:
+                self.pasa()
+            else:
+                self.fallo("MEDIUM", "ACCESSIBILITY",
+                           "tokens.css sin :focus-visible")
+            if "prefers-reduced-motion" in texto:
+                self.pasa()
+            else:
+                self.fallo("MEDIUM", "ACCESSIBILITY",
+                           "tokens.css sin prefers-reduced-motion")
+
+    # ---------------- ACCESSIBILITY (basico automatizado) ----------------
+    def accesibilidad(self) -> None:
+        # NOTA: revis manual WCAG completa no realizada; esto es el subconjunto automatizable
+        paginas = [self.root / "index.html", self.campus / "index.html"]
+        for pag in paginas:
+            if not pag.exists():
+                continue
+            texto = pag.read_text(encoding="utf-8", errors="replace")
+            if re.search(r"<html[^>]+lang=", texto):
+                self.pasa()
+            else:
+                self.fallo("HIGH", "ACCESSIBILITY", f"{pag.name}: sin lang")
+            if "skip-link" in texto:
+                self.pasa()
+            else:
+                self.fallo("MEDIUM", "ACCESSIBILITY",
+                           f"{pag.name}: sin skip-link")
+        for pag in self.campus.rglob("*.html"):
+            texto = pag.read_text(encoding="utf-8", errors="replace")
+            for img in re.findall(r"<img\b[^>]*>", texto):
+                if "alt=" not in img:
+                    self.fallo("HIGH", "ACCESSIBILITY",
+                               f"{pag.name}: img sin alt")
+
+    # ---------------- PERFORMANCE (REVIEW con datos) ----------------
+    def rendimiento(self) -> None:
+        for pag in sorted(self.campus.rglob("*.html")) + [self.root / "index.html"]:
+            if not pag.exists():
+                continue
+            texto = pag.read_text(encoding="utf-8", errors="replace")
+            kb = len(texto.encode("utf-8")) / 1024
+            if kb > 150:
+                self.fallo("MEDIUM", "PERFORMANCE",
+                           f"{pag.name}: {kb:.0f} KB de HTML")
+            else:
+                self.pasa()
+            cdns = len(re.findall(r'src="https?://', texto))
+            if cdns > 3:
+                self.fallo("MEDIUM", "PERFORMANCE",
+                           f"{pag.name}: {cdns} dependencias CDN")
+            elif cdns:
+                self.pasa()
+
+    # ---------------- DOCUMENTATION ----------------
+    def documentacion(self) -> None:
+        readme = self.root / "README.md"
+        if not readme.exists():
+            self.fallo("HIGH", "DOCUMENTATION", "sin README")
+            return
+        texto = readme.read_text(encoding="utf-8")
+        if len(texto) < 1500:
+            self.fallo("MEDIUM", "DOCUMENTATION",
+                       f"README esqueleto ({len(texto)} chars)")
+        for palabra in ("pytest", "eduforge", "audit"):
+            if palabra in texto:
+                self.pasa()
+            else:
+                self.fallo("MEDIUM", "DOCUMENTATION",
+                           f"README no documenta {palabra}")
+        story = self.root / "STORY.md"
+        if story.exists():
+            sv = story.read_text(encoding="utf-8")
+            if "READY FOR PRODUCTION" in sv:
+                self.fallo("HIGH", "DOCUMENTATION",
+                           'STORY afirma "READY FOR PRODUCTION"')
+            else:
+                self.pasa()
+
+    # ---------------- DEPLOY ----------------
+    def deploy(self) -> None:
+        sm = self.root / "public" / "sitemap.xml"
+        if not sm.exists():
+            self.fallo("MEDIUM", "DEPLOY", "sin public/sitemap.xml")
+            return
+        texto = sm.read_text(encoding="utf-8")
+        if "example.com" in texto or "/about" in texto or "/contact" in texto:
+            self.fallo("HIGH", "DEPLOY", "sitemap con rutas/dominio ficticios")
+        else:
+            self.pasa()
+        for loc in re.findall(r"<loc>([^<]+)</loc>", texto):
+            ruta = loc.replace("__BASE_URL__", "")
+            destino = self.root / ruta.lstrip("/")
+            if destino.exists() or (destino / "index.html").exists():
+                self.pasa()
+            else:
+                self.fallo("HIGH", "DEPLOY", f"sitemap apunta a ruta inexistente: {ruta}")
+        robots = self.root / "public" / "robots.txt"
+        if robots.exists():
+            rv = robots.read_text(encoding="utf-8")
+            # el contenido real vive en /campus: no debe estar desindexado
+            if "Disallow: /campus" in rv:
+                self.fallo("HIGH", "DEPLOY", "robots desindexa /campus")
+            else:
+                self.pasa()
+        netlify = self.root / "netlify.toml"
+        if netlify.exists():
+            nv = netlify.read_text(encoding="utf-8")
+            if re.search(r'from = "/\*"', nv) and 'status = 200' in nv:
+                self.fallo("MEDIUM", "DEPLOY",
+                           "redirect SPA /* → 200 enmascara 404 reales")
+
     # ---------------- INFORME ----------------
     def informe(self) -> int:
-        secciones = ["STRUCTURE", "CONTENT", "LINKS", "I18N", "HTML", "JS",
-                     "PYTHON", "SECURITY", "ACADEMIC"]
+        secciones = ["STRUCTURE", "CONTENT", "LINKS", "I18N", "HTML", "CSS",
+                     "JS", "PYTHON", "SECURITY", "ACCESSIBILITY",
+                     "PERFORMANCE", "ACADEMIC", "DOCUMENTATION", "DEPLOY"]
         print("EDUFORGE AUDIT")
         print("=" * 46)
         bloqueantes = 0
@@ -379,6 +509,11 @@ def auditar(root: Path) -> int:
     a.python()
     a.seguridad()
     a.academico()
+    a.css()
+    a.accesibilidad()
+    a.rendimiento()
+    a.documentacion()
+    a.deploy()
     return a.informe()
 
 

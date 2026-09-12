@@ -168,10 +168,11 @@ _CURSO_CSS = """\
   </style>"""
 
 
-def _quiz_player_js(items: list[dict]) -> str:
+def _quiz_player_js(items: list[dict], slug: str) -> str:
     data = json.dumps(items, ensure_ascii=False)
     return f"""  <script>
     const QUIZ = {data};
+    const SLUG = "{slug}";
     let qi = 0, score = 0;
     const qt = document.getElementById('q-titulo');
     const qo = document.getElementById('q-opciones');
@@ -203,9 +204,18 @@ def _quiz_player_js(items: list[dict]) -> str:
     function fin() {{
       qt.textContent = 'Terminado: ' + score + '/' + QUIZ.length;
       qo.innerHTML = ''; qm.textContent = '';
-      qf.textContent = score >= QUIZ.length * 0.7
-        ? 'Nivel superado — marca el quiz en tu progreso.'
-        : 'Repasa la semana y vuelve a intentarlo.';
+      const superado = score >= QUIZ.length * 0.7;
+      if (superado) {{
+        // progreso real: el quiz superado se marca solo (token local, sin servidor)
+        try {{
+          const est = JSON.parse(localStorage.getItem('stt-progreso') || '{{}}');
+          est[SLUG + '/quiz'] = true;
+          localStorage.setItem('stt-progreso', JSON.stringify(est));
+        }} catch (e) {{ /* sin storage: progreso manual en progreso.html */ }}
+        qf.textContent = 'Nivel superado — quiz marcado automáticamente en tu progreso.';
+      }} else {{
+        qf.textContent = 'Repasa las semanas y vuelve a intentarlo (se supera con 70 %).';
+      }}
     }}
     render();
     // nav activa al hacer scroll
@@ -310,7 +320,7 @@ Al superar 70 %, márcalo en tu progreso.</p>
     </section>
   </main>
 </div>
-{_quiz_player_js(curso['quiz'])}
+{_quiz_player_js(curso['quiz'], curso['slug'])}
 </body>
 </html>
 """
@@ -1075,6 +1085,38 @@ mapa de un programa abierto de 4 cursos, no una acreditación.
 """
 
 
+def _generar_sitemap(root: Path, campus: Path, repo: str) -> list[str]:
+    """Sitemap con rutas REALES del sitio. __BASE_URL__ es un placeholder:
+    el dominio se define al desplegar (documentado en README). Nunca URLs
+    inventadas ni rutas que no existen."""
+    rutas = ["/", "/campus/", "/campus/progreso.html",
+             "/campus/credencial.html", "/campus/buscar.html",
+             "/campus/idiomas.md", "/campus/calendario.md",
+             "/campus/mapa-curricular.md"]
+    for slug in REPO_COURSES.get(repo, []):
+        if (campus / "cursos" / slug / "index.html").exists():
+            rutas.append(f"/campus/cursos/{slug}/")
+    hoy = __import__("datetime").date.today().isoformat()
+    entradas = "\n".join(
+        f"  <url><loc>__BASE_URL__{r}</loc><lastmod>{hoy}</lastmod></url>"
+        for r in rutas)
+    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+           f"{entradas}\n</urlset>\n")
+    pub = root / "public"
+    pub.mkdir(exist_ok=True)
+    (pub / "sitemap.xml").write_text(xml, encoding="utf-8")
+    (pub / "robots.txt").write_text(
+        "# robots.txt — secure-t-university\n"
+        "# Reemplaza __BASE_URL__ por el dominio real al desplegar.\n"
+        "User-agent: *\n"
+        "Allow: /\n"
+        "\n"
+        "Sitemap: __BASE_URL__/public/sitemap.xml\n",
+        encoding="utf-8")
+    return rutas
+
+
 # ===================== MOTOR =================================================
 
 
@@ -1161,6 +1203,9 @@ def generate(target_root: Path, repo_name: str) -> dict:
     (campus / "indice.json").write_text(
         json.dumps(indice, ensure_ascii=False, indent=1), encoding="utf-8")
     report["indice"] = len(indice)
+
+    # sitemap + robots con rutas reales (sin dominios ficticios)
+    report["sitemap"] = len(_generar_sitemap(target_root, campus, repo_name))
     return report
 
 
