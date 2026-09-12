@@ -157,7 +157,8 @@ class Auditor:
 
     # ---------------- LINKS ----------------
     def enlaces(self) -> None:
-        paginas = sorted(self.campus.rglob("*.html")) + [self.root / "index.html"]
+        paginas = sorted(self.campus.rglob("*.html")) + [self.root / "index.html",
+                                                         self.root / "404.html"]
         href_re = re.compile(r'(?:href|src)="([^"]+?)"')
         for pag in paginas:
             if not pag.exists():
@@ -184,7 +185,8 @@ class Auditor:
                 ruta = destino.split("#")[0].split("?")[0]
                 if not ruta:
                     continue
-                if (base / ruta).exists():
+                base_abs = self.root if ruta.startswith("/") else base
+                if (base_abs / ruta.lstrip("/")).exists():
                     self.pasa()
                 else:
                     self.fallo("HIGH", "LINKS",
@@ -389,6 +391,17 @@ class Auditor:
                 if "alt=" not in img:
                     self.fallo("HIGH", "ACCESSIBILITY",
                                f"{pag.name}: img sin alt")
+        # enlaces solo-icono necesitan aria-label
+        for pag in sorted(self.campus.rglob("*.html")) + [self.root / "index.html"]:
+            if not pag.exists():
+                continue
+            texto = pag.read_text(encoding="utf-8", errors="replace")
+            for m in re.finditer(r"<a\b[^>]*>\s*<i\b[^>]*>.*?</i>\s*</a>",
+                                 texto, re.S):
+                if "aria-label" not in m.group(0) and not re.search(
+                        r">[^<]*\S[^<]*<", m.group(0).split(">", 1)[1].rsplit("<", 1)[0]):
+                    self.fallo("MEDIUM", "ACCESSIBILITY",
+                               f"{pag.name}: enlace solo-icono sin aria-label")
 
     # ---------------- PERFORMANCE (REVIEW con datos) ----------------
     def rendimiento(self) -> None:
@@ -407,6 +420,15 @@ class Auditor:
                 self.fallo("MEDIUM", "PERFORMANCE",
                            f"{pag.name}: {cdns} dependencias CDN")
             elif cdns:
+                self.pasa()
+        # audios de voces ligeros (PWA offline razonable)
+        for mp3 in (self.campus / "voces").glob("*.mp3") \
+                if (self.campus / "voces").is_dir() else []:
+            kb = mp3.stat().st_size / 1024
+            if kb > 300:
+                self.fallo("MEDIUM", "PERFORMANCE",
+                           f"{mp3.name}: {kb:.0f} KB (>300 KB)")
+            else:
                 self.pasa()
 
     # ---------------- DOCUMENTATION ----------------
@@ -433,6 +455,11 @@ class Auditor:
                            'STORY afirma "READY FOR PRODUCTION"')
             else:
                 self.pasa()
+        # security.txt: canal de contacto de seguridad declarado
+        if (self.root / "public" / "security.txt").exists():
+            self.pasa()
+        else:
+            self.fallo("MEDIUM", "DOCUMENTATION", "sin public/security.txt")
 
     # ---------------- DEPLOY ----------------
     def deploy(self) -> None:
@@ -460,6 +487,18 @@ class Auditor:
                 self.fallo("HIGH", "DEPLOY", "robots desindexa /campus")
             else:
                 self.pasa()
+        else:
+            self.fallo("MEDIUM", "DEPLOY", "sin public/robots.txt")
+        # 404 real: página dedicada, no la landing enmascarando
+        if (self.root / "404.html").exists():
+            self.pasa()
+        else:
+            self.fallo("MEDIUM", "DEPLOY", "sin 404.html dedicado")
+        # SITE_URL sin fijar: WARN documentado (dominio pendiente), no FAIL
+        if "__BASE_URL__" in texto:
+            self.fallo("MEDIUM", "DEPLOY",
+                       "SITE_URL sin fijar: sitemap/robots usan placeholder "
+                       "(documentado; fijar al desplegar)")
         netlify = self.root / "netlify.toml"
         if netlify.exists():
             nv = netlify.read_text(encoding="utf-8")

@@ -1086,9 +1086,11 @@ mapa de un programa abierto de 4 cursos, no una acreditación.
 
 
 def _generar_sitemap(root: Path, campus: Path, repo: str) -> list[str]:
-    """Sitemap con rutas REALES del sitio. __BASE_URL__ es un placeholder:
-    el dominio se define al desplegar (documentado en README). Nunca URLs
-    inventadas ni rutas que no existen."""
+    """Sitemap con rutas REALES del sitio. El dominio viene de SITE_URL
+    (env); si no está fijado se deja el placeholder __BASE_URL__ y el
+    auditor lo reporta como WARN documentado. Nunca URLs inventadas."""
+    import os
+    site = os.environ.get("SITE_URL", "__BASE_URL__")
     rutas = ["/", "/campus/", "/campus/progreso.html",
              "/campus/credencial.html", "/campus/buscar.html",
              "/campus/idiomas.md", "/campus/calendario.md",
@@ -1098,7 +1100,7 @@ def _generar_sitemap(root: Path, campus: Path, repo: str) -> list[str]:
             rutas.append(f"/campus/cursos/{slug}/")
     hoy = __import__("datetime").date.today().isoformat()
     entradas = "\n".join(
-        f"  <url><loc>__BASE_URL__{r}</loc><lastmod>{hoy}</lastmod></url>"
+        f"  <url><loc>{site}{r}</loc><lastmod>{hoy}</lastmod></url>"
         for r in rutas)
     xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -1107,14 +1109,46 @@ def _generar_sitemap(root: Path, campus: Path, repo: str) -> list[str]:
     pub.mkdir(exist_ok=True)
     (pub / "sitemap.xml").write_text(xml, encoding="utf-8")
     (pub / "robots.txt").write_text(
-        "# robots.txt — secure-t-university\n"
-        "# Reemplaza __BASE_URL__ por el dominio real al desplegar.\n"
+        "# robots.txt — secure-t-university (generado por eduforge)\n"
+        "# Fija SITE_URL al desplegar para URLs definitivas.\n"
         "User-agent: *\n"
         "Allow: /\n"
+        "Allow: /campus/\n"
+        "Allow: /campus/cursos/\n"
         "\n"
-        "Sitemap: __BASE_URL__/public/sitemap.xml\n",
+        f"Sitemap: {site}/public/sitemap.xml\n",
         encoding="utf-8")
+    # 404 real y trilingüe (los 404 no se enmascaran con la landing)
+    (root / "404.html").write_text(_HTML_404, encoding="utf-8")
     return rutas
+
+
+_HTML_404 = """<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 — Secure T University</title>
+<meta name="robots" content="noindex">
+<style>
+  :root{color-scheme:dark}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0a0e17;
+       color:#e8ecf4;font-family:'Space Grotesk',system-ui,sans-serif;text-align:center}
+  h1{font-size:clamp(3rem,10vw,5rem);margin:0;background:linear-gradient(90deg,#5b8cff,#9db8ff);
+     -webkit-background-clip:text;background-clip:text;color:transparent}
+  a{color:#5b8cff;text-decoration:none}a:hover{text-decoration:underline}
+  .box{padding:2rem;max-width:32rem}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>404</h1>
+  <p>Esta página não existe. · Esta página no existe. · This page does not exist.</p>
+  <p><a href="/">← início</a> · <a href="/campus/">campus →</a></p>
+</div>
+</body>
+</html>
+"""
 
 
 # ===================== MOTOR =================================================
