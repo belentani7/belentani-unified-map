@@ -169,6 +169,30 @@ footer { padding: var(--sp-8) 0; border-top: 1px solid var(--border);
   h1 { font-size: var(--fs-2xl); }
   .topbar { padding-inline: var(--sp-4); }
 }
+
+/* tema claro del campus (mismo interruptor que la landing: stt-theme) */
+:root[data-theme="light"] {
+  --bg-page: hsl(220 40% 98%);
+  --bg-surface: hsl(0 0% 100%);
+  --bg-sunken: hsl(220 44% 95%);
+  --bg-muted: hsl(220 40% 94%);
+  --bg-hover: hsl(220 30% 90%);
+  --text-1: hsl(222 40% 12%);
+  --text-2: hsl(220 14% 34%);
+  --text-3: hsl(220 10% 48%);
+  --border: hsl(220 20% 85%);
+  --accent-ink: hsl(0 0% 100%);
+  --accent-soft: hsl(222 80% 94%);
+  --shadow: 0 8px 24px hsl(222 30% 70% / .3);
+}
+
+/* impresión: el syllabus del curso se imprime limpio */
+@media print {
+  .topbar, .curso-nav, .btn, .no-print, #scroll-progress { display: none !important; }
+  body { background: #fff; color: #000; }
+  .card, section, table, pre { border-color: #ccc; box-shadow: none; }
+  main { max-width: 100%; }
+}
 """
 
 APP_JS = """// campus app: quiz player + stagger + audit (sin dependencias)

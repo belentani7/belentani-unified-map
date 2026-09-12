@@ -839,3 +839,22 @@ _c(
          "correcta": 1, "explicacion": "Un expediente es una cadena de afirmaciones → artefactos (logs, revisiones, matrices), no un PDF bonito."},
     ],
 )
+
+
+# ===================== EXPANSIÓN CANÓNICA DE SEMANAS ========================
+# content_expanded.json es la expansión curricular validada (20 semanas por
+# curso, formato idéntico al de arriba). Se absorbe AQUÍ para que CURSOS siga
+# siendo la única fuente de verdad: ningún generador lee el JSON directamente.
+
+def _aplicar_expansion() -> None:
+    import json as _json
+    from pathlib import Path as _Path
+    exp = _Path(__file__).parent / "content_expanded.json"
+    if not exp.exists():
+        return
+    data = _json.loads(exp.read_text(encoding="utf-8"))
+    for slug, cur in data.items():
+        if slug in CURSOS and cur.get("semanas"):
+            CURSOS[slug]["semanas"] = cur["semanas"]
+
+_aplicar_expansion()

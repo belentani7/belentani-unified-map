@@ -1,0 +1,1968 @@
+{
+  "ciber-ofensiva": {
+    "slug": "ciber-ofensiva",
+    "titulo": "Ciberseguridad Ofensiva: Pensar como Atacante",
+    "idioma": "es",
+    "nivel": "universitario",
+    "horas": 60,
+    "descripcion": "Curso universitario de seguridad ofensiva con ética desde el día 1: recon pasivo, OSINT, OWASP Top 10 y laboratorio con máquina vulnerable. Se aprueba demostrando hallazgos documentados, nunca adivinando.",
+    "objetivos": [
+      "Distinguir hacking ético de actividad delictiva",
+      "Ejecutar reconocimiento pasivo y OSINT sobre un objetivo autorizado",
+      "Explicar y reproducir los 10 riesgos web principales de OWASP",
+      "Redactar un informe de hallazgos con severidad y remediación"
+    ],
+    "semanas": [
+      {
+        "n": 1,
+        "titulo": "Ética, legalidad y alcance del test",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Regla número uno: permiso escrito",
+            "texto": "Nada se prueba sin autorización expresa y alcance firmado. Referencias: Convenio de Budapest (arts. 2-6), Código Penal esp. (arts. 197-198), y el estándar de alcance 'rules of engagement'. Un pentest sin contrato es un delito."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Redacta tu carta de autorización",
+            "texto": "Plantilla: partes, objetivo, ventanas de tiempo, puntos de contacto, plan de escape ante incidente, firma."
+          },
+          {
+            "tipo": "lectura",
+            "titulo": "Metodologías: PTES, OWASP WSTG, MITRE ATT&CK",
+            "texto": "PTES da las fases; WSTG orienta pruebas web; ATT&CK cataloga tácticas y técnicas del adversario real."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "titulo": "Reconocimiento pasivo y OSINT",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Ver sin tocar: footprinting pasivo",
+            "texto": "DNS, certificados (crt.sh), Wayback Machine, metadatos públicos, Google dorks. El 70% de la inteligencia útil no requiere enviar un solo paquete al objetivo."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Perfil OSINT de un dominio propio",
+            "texto": "Con tu propio dominio (o uno autorizado): subdominios, tecnologías visibles, emails corporativos expuestos, filtraciones en breech-db."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "titulo": "Los 10 riesgos web (OWASP Top 10)",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Inyección y control de acceso roto",
+            "texto": "SQLi y NoSQLi: input que se convierte en código. Broken Access Control: el servidor confía en el cliente. Son los dos defectos que más brechas reales causan."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Práctica guiada en laboratorio legal",
+            "texto": "OWASP Juice Shop / bWAPP en local: encuentra 3 vulnerabilidades del Top 10 y documenta reproducción."
+          },
+          {
+            "tipo": "lectura",
+            "titulo": "SSRF, XSS y componentes obsoletos",
+            "texto": "El servidor pidiendo por ti (SSRF), el navegador del usuario como objetivo (XSS) y el CVE sin parchear."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "titulo": "Laboratorio final: máquina vulnerable + informe",
+        "lecciones": [
+          {
+            "tipo": "proyecto",
+            "titulo": "De recon a reporte en Metasploitable",
+            "texto": "Máquina vulnerable local (Metasploitable 2 o similar): recon, explotación de 2 vectores, escalada, evidencia capturada. Solo en red local propia."
+          },
+          {
+            "tipo": "examen",
+            "titulo": "Informe ético evaluado",
+            "texto": "Formato ejecutivo + técnico: hallazgo, severidad CVSS, reproducción paso a paso, remediación."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "titulo": "Reconocimiento avanzado y OSINT",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Reconocimiento avanzado y OSINT",
+            "texto": "Contenido teorico detallado para reconocimiento avanzado y osint. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Reconocimiento avanzado y OSINT",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para reconocimiento avanzado y osint."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Reconocimiento avanzado y OSINT",
+            "texto": "Analisis de incidente real donde reconocimiento avanzado y osint fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "titulo": "Modelado de amenazas y arboles de ataque",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Modelado de amenazas y arboles de ataque",
+            "texto": "Contenido teorico detallado para modelado de amenazas y arboles de ataque. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Modelado de amenazas y arboles de ataque",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para modelado de amenazas y arboles de ataque."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Modelado de amenazas y arboles de ataque",
+            "texto": "Analisis de incidente real donde modelado de amenazas y arboles de ataque fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "titulo": "Escaneo de vulnerabilidades y validacion",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Escaneo de vulnerabilidades y validacion",
+            "texto": "Contenido teorico detallado para escaneo de vulnerabilidades y validacion. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Escaneo de vulnerabilidades y validacion",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para escaneo de vulnerabilidades y validacion."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Escaneo de vulnerabilidades y validacion",
+            "texto": "Analisis de incidente real donde escaneo de vulnerabilidades y validacion fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "titulo": "Ataques a aplicaciones web (OWASP Top 10)",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Ataques a aplicaciones web (OWASP Top 10)",
+            "texto": "Contenido teorico detallado para ataques a aplicaciones web (owasp top 10). Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Ataques a aplicaciones web (OWASP Top 10)",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para ataques a aplicaciones web (owasp top 10)."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Ataques a aplicaciones web (OWASP Top 10)",
+            "texto": "Analisis de incidente real donde ataques a aplicaciones web (owasp top 10) fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "titulo": "Explotacion de red y servicios",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Explotacion de red y servicios",
+            "texto": "Contenido teorico detallado para explotacion de red y servicios. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Explotacion de red y servicios",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para explotacion de red y servicios."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Explotacion de red y servicios",
+            "texto": "Analisis de incidente real donde explotacion de red y servicios fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "titulo": "Escalada de privilegios Windows y Linux",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Escalada de privilegios Windows y Linux",
+            "texto": "Contenido teorico detallado para escalada de privilegios windows y linux. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Escalada de privilegios Windows y Linux",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para escalada de privilegios windows y linux."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Escalada de privilegios Windows y Linux",
+            "texto": "Analisis de incidente real donde escalada de privilegios windows y linux fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 11,
+        "titulo": "Movimiento lateral y pivoting",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Movimiento lateral y pivoting",
+            "texto": "Contenido teorico detallado para movimiento lateral y pivoting. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Movimiento lateral y pivoting",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para movimiento lateral y pivoting."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Movimiento lateral y pivoting",
+            "texto": "Analisis de incidente real donde movimiento lateral y pivoting fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 12,
+        "titulo": "Mecanismos de persistencia",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Mecanismos de persistencia",
+            "texto": "Contenido teorico detallado para mecanismos de persistencia. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Mecanismos de persistencia",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para mecanismos de persistencia."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Mecanismos de persistencia",
+            "texto": "Analisis de incidente real donde mecanismos de persistencia fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 13,
+        "titulo": "Evasion de defensas",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Evasion de defensas",
+            "texto": "Contenido teorico detallado para evasion de defensas. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Evasion de defensas",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para evasion de defensas."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Evasion de defensas",
+            "texto": "Analisis de incidente real donde evasion de defensas fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 14,
+        "titulo": "Acceso a credenciales y volcado",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Acceso a credenciales y volcado",
+            "texto": "Contenido teorico detallado para acceso a credenciales y volcado. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Acceso a credenciales y volcado",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para acceso a credenciales y volcado."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Acceso a credenciales y volcado",
+            "texto": "Analisis de incidente real donde acceso a credenciales y volcado fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 15,
+        "titulo": "Exfiltracion e impacto",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Exfiltracion e impacto",
+            "texto": "Contenido teorico detallado para exfiltracion e impacto. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Exfiltracion e impacto",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para exfiltracion e impacto."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Exfiltracion e impacto",
+            "texto": "Analisis de incidente real donde exfiltracion e impacto fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 16,
+        "titulo": "Ataques a cloud y contenedores",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Ataques a cloud y contenedores",
+            "texto": "Contenido teorico detallado para ataques a cloud y contenedores. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Ataques a cloud y contenedores",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para ataques a cloud y contenedores."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Ataques a cloud y contenedores",
+            "texto": "Analisis de incidente real donde ataques a cloud y contenedores fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 17,
+        "titulo": "Red teaming wireless y fisico",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Red teaming wireless y fisico",
+            "texto": "Contenido teorico detallado para red teaming wireless y fisico. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Red teaming wireless y fisico",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para red teaming wireless y fisico."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Red teaming wireless y fisico",
+            "texto": "Analisis de incidente real donde red teaming wireless y fisico fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 18,
+        "titulo": "Ingenieria social y phishing",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Ingenieria social y phishing",
+            "texto": "Contenido teorico detallado para ingenieria social y phishing. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Ingenieria social y phishing",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para ingenieria social y phishing."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Ingenieria social y phishing",
+            "texto": "Analisis de incidente real donde ingenieria social y phishing fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 19,
+        "titulo": "Informes y seguimiento de remediacion",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Informes y seguimiento de remediacion",
+            "texto": "Contenido teorico detallado para informes y seguimiento de remediacion. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Informes y seguimiento de remediacion",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para informes y seguimiento de remediacion."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Informes y seguimiento de remediacion",
+            "texto": "Analisis de incidente real donde informes y seguimiento de remediacion fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 20,
+        "titulo": "Capstone: Pentest completo end-to-end",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Capstone: Pentest completo end-to-end",
+            "texto": "Contenido teorico detallado para capstone: pentest completo end-to-end. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Capstone: Pentest completo end-to-end",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para capstone: pentest completo end-to-end."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Capstone: Pentest completo end-to-end",
+            "texto": "Analisis de incidente real donde capstone: pentest completo end-to-end fue factor clave. Lecciones aprendidas."
+          },
+          {
+            "tipo": "proyecto",
+            "titulo": "Proyecto integrador: Capstone: Pentest completo end-to-end",
+            "texto": "Proyecto final que integra todos los conocimientos del curso."
+          }
+        ]
+      }
+    ],
+    "quiz": [
+      {
+        "pregunta": "Lo primero en cualquier test ofensivo es...",
+        "opciones": [
+          "Escanear agresivamente",
+          "Obtener permiso escrito y alcance",
+          "Instalar Metasploit",
+          "Buscar 0-days"
+        ],
+        "correcta": 1,
+        "explicacion": "Sin autorización expresa no hay test ético: hay delito."
+      },
+      {
+        "pregunta": "OWASP Top 10 es...",
+        "opciones": [
+          "Una lista de antivirus",
+          "Un ranking de riesgos de seguridad web",
+          "Un firewall",
+          "Una norma ISO"
+        ],
+        "correcta": 1,
+        "explicacion": "Consenso comunitario sobre los 10 riesgos web más críticos."
+      },
+      {
+        "pregunta": "El OSINT pasivo se caracteriza por...",
+        "opciones": [
+          "Enviar paquetes al objetivo",
+          "No contactar directamente el objetivo",
+          "Requerir exploits",
+          "Ser ilegal siempre"
+        ],
+        "correcta": 1,
+        "explicacion": "Recolecta información pública sin tocar la infraestructura del objetivo."
+      },
+      {
+        "pregunta": "Un hallazgo en el informe ético se cierra con...",
+        "opciones": [
+          "Un pantallazo sin contexto",
+          "Severidad + reproducción + remediación",
+          "El nombre del atacante",
+          "El precio del fix"
+        ],
+        "correcta": 1,
+        "explicacion": "Sin severidad (CVSS), reproducción y remediación no es un hallazgo accionable."
+      },
+      {
+        "pregunta": "Juice Shop o Metasploitable son válidos para practicar porque...",
+        "opciones": [
+          "Son sistemas de terceros sin dueño",
+          "Son entornos creados para ser vulnerados legalmente en local",
+          "Están parcheados",
+          "No necesitan VM"
+        ],
+        "correcta": 1,
+        "explicacion": "Son plataformas deliberadamente vulnerables para formación, en red local propia."
+      },
+      {
+        "pregunta": "Un escaneo agresivo se evita en recon porque...",
+        "opciones": [
+          "Es lento",
+          "Puede tumbar el servicio y saltar alarmas IDS",
+          "No da información",
+          "Es ilegal en todo caso"
+        ],
+        "correcta": 1,
+        "explicacion": "El recon profesional minimiza impacto: primero pasivo, escaneo suave después."
+      }
+    ]
+  },
+  "ciber-defensiva": {
+    "slug": "ciber-defensiva",
+    "titulo": "Ciberseguridad Defensiva: Operar como SOC",
+    "idioma": "es",
+    "nivel": "universitario",
+    "horas": 60,
+    "descripcion": "Curso universitario de defensa: triada CIA, telemetría y logs, SIEM, respuesta a incidentes NIST y hardening. El estudiante opera un mini-SOC con casos reales despersonalizados.",
+    "objetivos": [
+      "Aplicar la triada CIA para clasificar activos y controles",
+      "Configurar recolección de logs y detección básica en un SIEM abierto",
+      "Ejecutar el ciclo de respuesta a incidentes de NIST 800-61",
+      "Endurecer un servidor con matriz de hardening verificable"
+    ],
+    "semanas": [
+      {
+        "n": 1,
+        "titulo": "Fundamentos: triada CIA y controles",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Confidencialidad, Integridad, Disponibilidad",
+            "texto": "Cada control se justifica por el riesgo que mitiga: cifrado (C), hashing y firma (I), redundancia (D). Mapa preventivo/detectivo/correctivo."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Clasifica 10 activos de una ONG ficticia",
+            "texto": "Impacto C/I/D por activo, control propuesto, costo aproximado. Se defiende en 5 minutos."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "titulo": "Telemetría: logs y detección",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "El log es el testigo",
+            "texto": "Fuentes: sistema, aplicación, red, identidad. Formato structured logging, retención legal, hora sincronizada (NTP) — sin hora correcta no hay correlación."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Mini-SOC con Wazuh o Security Onion",
+            "texto": "Instala en VM, conecta 2 agentes, genera 3 eventos (login fallido, escalada, malware EICAR) y detecta."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "titulo": "Respuesta a incidentes (NIST 800-61)",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Preparación → Detección → Contención → Erradicación → Recuperación → Lecciones",
+            "texto": "El ciclo no termina hasta el informe de lecciones aprendidas. Playbooks por escenario: ransomware, phish, cuenta comprometida."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Juego de mesa: incidente de ransomware",
+            "texto": "Rol de analista: cronología, decisiones de contención, comunicación, post-incidente."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "titulo": "Hardening y continuidad",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Superficie de ataque mínima",
+            "texto": "CIS Benchmarks: servicios innecesarios fuera, puertos cerrados, actualizaciones, MFA, backups 3-2-1 con prueba de restauración."
+          },
+          {
+            "tipo": "examen",
+            "titulo": "Auditoría de hardening evaluada",
+            "texto": "Checklist CIS nivel 1 sobre una VM: evidencia antes/después."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "titulo": "Fundamentos de SOC y triaje de alertas",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Fundamentos de SOC y triaje de alertas",
+            "texto": "Contenido teorico detallado para fundamentos de soc y triaje de alertas. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Fundamentos de SOC y triaje de alertas",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para fundamentos de soc y triaje de alertas."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Fundamentos de SOC y triaje de alertas",
+            "texto": "Analisis de incidente real donde fundamentos de soc y triaje de alertas fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "titulo": "Ingenieria de deteccion y reglas Sigma",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Ingenieria de deteccion y reglas Sigma",
+            "texto": "Contenido teorico detallado para ingenieria de deteccion y reglas sigma. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Ingenieria de deteccion y reglas Sigma",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para ingenieria de deteccion y reglas sigma."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Ingenieria de deteccion y reglas Sigma",
+            "texto": "Analisis de incidente real donde ingenieria de deteccion y reglas sigma fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "titulo": "Respuesta a incidentes (NIST 800-61r3)",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Respuesta a incidentes (NIST 800-61r3)",
+            "texto": "Contenido teorico detallado para respuesta a incidentes (nist 800-61r3). Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Respuesta a incidentes (NIST 800-61r3)",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para respuesta a incidentes (nist 800-61r3)."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Respuesta a incidentes (NIST 800-61r3)",
+            "texto": "Analisis de incidente real donde respuesta a incidentes (nist 800-61r3) fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "titulo": "Inteligencia de amenazas y TIP",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Inteligencia de amenazas y TIP",
+            "texto": "Contenido teorico detallado para inteligencia de amenazas y tip. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Inteligencia de amenazas y TIP",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para inteligencia de amenazas y tip."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Inteligencia de amenazas y TIP",
+            "texto": "Analisis de incidente real donde inteligencia de amenazas y tip fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "titulo": "Deteccion y respuesta en endpoints (EDR)",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Deteccion y respuesta en endpoints (EDR)",
+            "texto": "Contenido teorico detallado para deteccion y respuesta en endpoints (edr). Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Deteccion y respuesta en endpoints (EDR)",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para deteccion y respuesta en endpoints (edr)."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Deteccion y respuesta en endpoints (EDR)",
+            "texto": "Analisis de incidente real donde deteccion y respuesta en endpoints (edr) fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "titulo": "Analisis de trafico de red con Zeek/Suricata",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Analisis de trafico de red con Zeek/Suricata",
+            "texto": "Contenido teorico detallado para analisis de trafico de red con zeek/suricata. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Analisis de trafico de red con Zeek/Suricata",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para analisis de trafico de red con zeek/suricata."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Analisis de trafico de red con Zeek/Suricata",
+            "texto": "Analisis de incidente real donde analisis de trafico de red con zeek/suricata fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 11,
+        "titulo": "Analisis basico de malware",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Analisis basico de malware",
+            "texto": "Contenido teorico detallado para analisis basico de malware. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Analisis basico de malware",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para analisis basico de malware."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Analisis basico de malware",
+            "texto": "Analisis de incidente real donde analisis basico de malware fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 12,
+        "titulo": "Forense digital y manejo de evidencias",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Forense digital y manejo de evidencias",
+            "texto": "Contenido teorico detallado para forense digital y manejo de evidencias. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Forense digital y manejo de evidencias",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para forense digital y manejo de evidencias."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Forense digital y manejo de evidencias",
+            "texto": "Analisis de incidente real donde forense digital y manejo de evidencias fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 13,
+        "titulo": "Gestion del ciclo de vida de vulnerabilidades",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Gestion del ciclo de vida de vulnerabilidades",
+            "texto": "Contenido teorico detallado para gestion del ciclo de vida de vulnerabilidades. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Gestion del ciclo de vida de vulnerabilidades",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para gestion del ciclo de vida de vulnerabilidades."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Gestion del ciclo de vida de vulnerabilidades",
+            "texto": "Analisis de incidente real donde gestion del ciclo de vida de vulnerabilidades fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 14,
+        "titulo": "Hardening y lineas base de configuracion",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Hardening y lineas base de configuracion",
+            "texto": "Contenido teorico detallado para hardening y lineas base de configuracion. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Hardening y lineas base de configuracion",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para hardening y lineas base de configuracion."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Hardening y lineas base de configuracion",
+            "texto": "Analisis de incidente real donde hardening y lineas base de configuracion fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 15,
+        "titulo": "Gestion de identidades y acceso (IAM)",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Gestion de identidades y acceso (IAM)",
+            "texto": "Contenido teorico detallado para gestion de identidades y acceso (iam). Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Gestion de identidades y acceso (IAM)",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para gestion de identidades y acceso (iam)."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Gestion de identidades y acceso (IAM)",
+            "texto": "Analisis de incidente real donde gestion de identidades y acceso (iam) fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 16,
+        "titulo": "Postura de seguridad en cloud (CSPM/CWPP)",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Postura de seguridad en cloud (CSPM/CWPP)",
+            "texto": "Contenido teorico detallado para postura de seguridad en cloud (cspm/cwpp). Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Postura de seguridad en cloud (CSPM/CWPP)",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para postura de seguridad en cloud (cspm/cwpp)."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Postura de seguridad en cloud (CSPM/CWPP)",
+            "texto": "Analisis de incidente real donde postura de seguridad en cloud (cspm/cwpp) fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 17,
+        "titulo": "Seguridad de aplicaciones y DevSecOps",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Seguridad de aplicaciones y DevSecOps",
+            "texto": "Contenido teorico detallado para seguridad de aplicaciones y devsecops. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Seguridad de aplicaciones y DevSecOps",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para seguridad de aplicaciones y devsecops."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Seguridad de aplicaciones y DevSecOps",
+            "texto": "Analisis de incidente real donde seguridad de aplicaciones y devsecops fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 18,
+        "titulo": "Proteccion de datos y DLP",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Proteccion de datos y DLP",
+            "texto": "Contenido teorico detallado para proteccion de datos y dlp. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Proteccion de datos y DLP",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para proteccion de datos y dlp."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Proteccion de datos y DLP",
+            "texto": "Analisis de incidente real donde proteccion de datos y dlp fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 19,
+        "titulo": "Resiliencia: backup, DR y continuidad",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Resiliencia: backup, DR y continuidad",
+            "texto": "Contenido teorico detallado para resiliencia: backup, dr y continuidad. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Resiliencia: backup, DR y continuidad",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para resiliencia: backup, dr y continuidad."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Resiliencia: backup, DR y continuidad",
+            "texto": "Analisis de incidente real donde resiliencia: backup, dr y continuidad fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 20,
+        "titulo": "Capstone: Ejercicio Purple Team",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Capstone: Ejercicio Purple Team",
+            "texto": "Contenido teorico detallado para capstone: ejercicio purple team. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Capstone: Ejercicio Purple Team",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para capstone: ejercicio purple team."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Capstone: Ejercicio Purple Team",
+            "texto": "Analisis de incidente real donde capstone: ejercicio purple team fue factor clave. Lecciones aprendidas."
+          },
+          {
+            "tipo": "proyecto",
+            "titulo": "Proyecto integrador: Capstone: Ejercicio Purple Team",
+            "texto": "Proyecto final que integra todos los conocimientos del curso."
+          }
+        ]
+      }
+    ],
+    "quiz": [
+      {
+        "pregunta": "La triada CIA significa...",
+        "opciones": [
+          "Central Intelligence Agency",
+          "Confidencialidad, Integridad, Disponibilidad",
+          "Cifrado, Identidad, Acceso",
+          "Control, Inspección, Auditoría"
+        ],
+        "correcta": 1,
+        "explicacion": "Las tres propiedades que todo control protege."
+      },
+      {
+        "pregunta": "El ciclo NIST 800-61 termina con...",
+        "opciones": [
+          "La contención",
+          "El pago del rescate",
+          "Lecciones aprendidas",
+          "El reinicio"
+        ],
+        "correcta": 2,
+        "explicacion": "Sin post-incidente el ciclo está incompleto."
+      },
+      {
+        "pregunta": "Backup 3-2-1 significa...",
+        "opciones": [
+          "3 copias, 2 medios, 1 fuera de sitio",
+          "3 firewalls, 2 DMZ, 1 VPN",
+          "3 usuarios, 2 roles, 1 admin",
+          "3 hashes, 2 claves, 1 token"
+        ],
+        "correcta": 0,
+        "explicacion": "Tres copias en dos medios distintos y una copia externa."
+      },
+      {
+        "pregunta": "Sin hora sincronizada (NTP) en los logs, falla...",
+        "opciones": [
+          "El disco",
+          "La correlación de eventos",
+          "El firewall",
+          "El antivirus"
+        ],
+        "correcta": 1,
+        "explicacion": "Sin relojes coordinados no se puede reconstruir la cronología de un incidente."
+      },
+      {
+        "pregunta": "Un control detectivo (frente a preventivo) es...",
+        "opciones": [
+          "Un cifrado en reposo",
+          "Un sistema SIEM que alerta",
+          "Un parche",
+          "Un backup"
+        ],
+        "correcta": 1,
+        "explicacion": "Detecta lo que ya está pasando; no impide que empiece."
+      },
+      {
+        "pregunta": "La primera decisión en un incidente activo de ransomware es...",
+        "opciones": [
+          "Pagar el rescate",
+          "Contener (aislar máquinas afectadas)",
+          "Borrar los logs",
+          "Reinstalar todo"
+        ],
+        "correcta": 1,
+        "explicacion": "Contener para frenar la propagación; el rescate no se paga como regla y borrar evidencia destruye la investigación."
+      }
+    ]
+  },
+  "ia-aplicada-segura": {
+    "slug": "ia-aplicada-segura",
+    "titulo": "Inteligencia Artificial Aplicada y Segura",
+    "idioma": "es",
+    "nivel": "universitario",
+    "horas": 48,
+    "descripcion": "IA aplicada con seguridad como requisito, no como añadido: fundamentos de ML, LLMs y prompt engineering responsable, ataques adversariales y proyecto final de asistente educativo con salvaguardas.",
+    "objetivos": [
+      "Explicar el ciclo de vida de un modelo de ML sin tecnicismos vacíos",
+      "Diseñar prompts y flujos con LLM de forma responsable y verificable",
+      "Identificar ataques adversariales, poisoning y prompt injection",
+      "Construir un mini-asistente educativo con salvaguardas documentadas"
+    ],
+    "semanas": [
+      {
+        "n": 1,
+        "titulo": "Fundamentos de ML sin humo",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Datos → modelo → predicción → error",
+            "texto": "Entrenamiento vs inferencia. Sobreajuste en una frase: memorizar en vez de aprender. La calidad del dato gana al algoritmo elegante."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Clasificador de juguete",
+            "texto": "Con scikit-learn y un dataset abierto (iris o similar): entrena, mide, explica el error en lenguaje humano."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "titulo": "LLMs y prompt engineering responsable",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Cómo funciona un LLM (y qué no hace)",
+            "texto": "Predice el siguiente token; no 'sabe'. Alucinación como propiedad estadística. Contexto, temperatura, límites. Regla: la IA propone, la persona verifica."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Prompt ROL + TAREA + CONTEXTO + FORMATO",
+            "texto": "Construye 5 prompts educativos reales y compara respuestas con y sin estructura."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "titulo": "Ataques a sistemas de IA",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Adversarial, poisoning, prompt injection",
+            "texto": "Ejemplos con pegatina que engaña a la cámara, datos falsos que corrompen el entrenamiento, instrucciones ocultas que secuestran al asistente. OWASP Top 10 para LLM."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Inyección de prompt en laboratorio",
+            "texto": "Sobre un asistente propio (no de terceros): demuestra una inyección y luego la mitiga (sanitize, delimitadores, permisos mínimos)."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "titulo": "Proyecto: asistente educativo con salvaguardas",
+        "lecciones": [
+          {
+            "tipo": "proyecto",
+            "titulo": "Tutor de una lección del campus",
+            "texto": "Asistente que responde SOLO con material del curso (grounding), cita la fuente, se niega fuera de alcance y registra uso anónimo."
+          },
+          {
+            "tipo": "examen",
+            "titulo": "Defensa del proyecto",
+            "texto": "Demo en vivo: 3 preguntas válidas, 2 intentos de abuso contenidos por las salvaguardas."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "titulo": "Pipeline MLOps seguro",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Pipeline MLOps seguro",
+            "texto": "Contenido teorico detallado para pipeline mlops seguro. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Pipeline MLOps seguro",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para pipeline mlops seguro."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Pipeline MLOps seguro",
+            "texto": "Analisis de incidente real donde pipeline mlops seguro fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "titulo": "Robustez adversaria y testing",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Robustez adversaria y testing",
+            "texto": "Contenido teorico detallado para robustez adversaria y testing. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Robustez adversaria y testing",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para robustez adversaria y testing."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Robustez adversaria y testing",
+            "texto": "Analisis de incidente real donde robustez adversaria y testing fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "titulo": "Envenenamiento de datos y supply chain",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Envenenamiento de datos y supply chain",
+            "texto": "Contenido teorico detallado para envenenamiento de datos y supply chain. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Envenenamiento de datos y supply chain",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para envenenamiento de datos y supply chain."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Envenenamiento de datos y supply chain",
+            "texto": "Analisis de incidente real donde envenenamiento de datos y supply chain fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "titulo": "Extraccion de modelo y proteccion de PI",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Extraccion de modelo y proteccion de PI",
+            "texto": "Contenido teorico detallado para extraccion de modelo y proteccion de pi. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Extraccion de modelo y proteccion de PI",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para extraccion de modelo y proteccion de pi."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Extraccion de modelo y proteccion de PI",
+            "texto": "Analisis de incidente real donde extraccion de modelo y proteccion de pi fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "titulo": "ML que preserva privacidad",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: ML que preserva privacidad",
+            "texto": "Contenido teorico detallado para ml que preserva privacidad. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: ML que preserva privacidad",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para ml que preserva privacidad."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: ML que preserva privacidad",
+            "texto": "Analisis de incidente real donde ml que preserva privacidad fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "titulo": "Seguridad de LLM: inyeccion de prompts y jailbreaks",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Seguridad de LLM: inyeccion de prompts y jailbreaks",
+            "texto": "Contenido teorico detallado para seguridad de llm: inyeccion de prompts y jailbreaks. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Seguridad de LLM: inyeccion de prompts y jailbreaks",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para seguridad de llm: inyeccion de prompts y jailbreaks."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Seguridad de LLM: inyeccion de prompts y jailbreaks",
+            "texto": "Analisis de incidente real donde seguridad de llm: inyeccion de prompts y jailbreaks fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 11,
+        "titulo": "Supply chain de LLM y model cards",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Supply chain de LLM y model cards",
+            "texto": "Contenido teorico detallado para supply chain de llm y model cards. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Supply chain de LLM y model cards",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para supply chain de llm y model cards."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Supply chain de LLM y model cards",
+            "texto": "Analisis de incidente real donde supply chain de llm y model cards fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 12,
+        "titulo": "Seguridad de RAG y hardening de recuperacion",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Seguridad de RAG y hardening de recuperacion",
+            "texto": "Contenido teorico detallado para seguridad de rag y hardening de recuperacion. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Seguridad de RAG y hardening de recuperacion",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para seguridad de rag y hardening de recuperacion."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Seguridad de RAG y hardening de recuperacion",
+            "texto": "Analisis de incidente real donde seguridad de rag y hardening de recuperacion fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 13,
+        "titulo": "Metodologia de Red Teaming para IA",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Metodologia de Red Teaming para IA",
+            "texto": "Contenido teorico detallado para metodologia de red teaming para ia. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Metodologia de Red Teaming para IA",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para metodologia de red teaming para ia."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Metodologia de Red Teaming para IA",
+            "texto": "Analisis de incidente real donde metodologia de red teaming para ia fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 14,
+        "titulo": "Gobernanza: EU AI Act y NIST AI RMF",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Gobernanza: EU AI Act y NIST AI RMF",
+            "texto": "Contenido teorico detallado para gobernanza: eu ai act y nist ai rmf. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Gobernanza: EU AI Act y NIST AI RMF",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para gobernanza: eu ai act y nist ai rmf."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Gobernanza: EU AI Act y NIST AI RMF",
+            "texto": "Analisis de incidente real donde gobernanza: eu ai act y nist ai rmf fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 15,
+        "titulo": "Explicabilidad y rastros de auditoria",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Explicabilidad y rastros de auditoria",
+            "texto": "Contenido teorico detallado para explicabilidad y rastros de auditoria. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Explicabilidad y rastros de auditoria",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para explicabilidad y rastros de auditoria."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Explicabilidad y rastros de auditoria",
+            "texto": "Analisis de incidente real donde explicabilidad y rastros de auditoria fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 16,
+        "titulo": "Despliegue seguro: on-prem y cloud",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Despliegue seguro: on-prem y cloud",
+            "texto": "Contenido teorico detallado para despliegue seguro: on-prem y cloud. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Despliegue seguro: on-prem y cloud",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para despliegue seguro: on-prem y cloud."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Despliegue seguro: on-prem y cloud",
+            "texto": "Analisis de incidente real donde despliegue seguro: on-prem y cloud fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 17,
+        "titulo": "Monitoreo y deteccion de deriva",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Monitoreo y deteccion de deriva",
+            "texto": "Contenido teorico detallado para monitoreo y deteccion de deriva. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Monitoreo y deteccion de deriva",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para monitoreo y deteccion de deriva."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Monitoreo y deteccion de deriva",
+            "texto": "Analisis de incidente real donde monitoreo y deteccion de deriva fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 18,
+        "titulo": "Respuesta a incidentes en sistemas de IA",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Respuesta a incidentes en sistemas de IA",
+            "texto": "Contenido teorico detallado para respuesta a incidentes en sistemas de ia. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Respuesta a incidentes en sistemas de IA",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para respuesta a incidentes en sistemas de ia."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Respuesta a incidentes en sistemas de IA",
+            "texto": "Analisis de incidente real donde respuesta a incidentes en sistemas de ia fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 19,
+        "titulo": "Etica, sesgo y pruebas de equidad",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Etica, sesgo y pruebas de equidad",
+            "texto": "Contenido teorico detallado para etica, sesgo y pruebas de equidad. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Etica, sesgo y pruebas de equidad",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para etica, sesgo y pruebas de equidad."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Etica, sesgo y pruebas de equidad",
+            "texto": "Analisis de incidente real donde etica, sesgo y pruebas de equidad fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 20,
+        "titulo": "Capstone: Sistema ML seguro end-to-end",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Capstone: Sistema ML seguro end-to-end",
+            "texto": "Contenido teorico detallado para capstone: sistema ml seguro end-to-end. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Capstone: Sistema ML seguro end-to-end",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para capstone: sistema ml seguro end-to-end."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Capstone: Sistema ML seguro end-to-end",
+            "texto": "Analisis de incidente real donde capstone: sistema ml seguro end-to-end fue factor clave. Lecciones aprendidas."
+          },
+          {
+            "tipo": "proyecto",
+            "titulo": "Proyecto integrador: Capstone: Sistema ML seguro end-to-end",
+            "texto": "Proyecto final que integra todos los conocimientos del curso."
+          }
+        ]
+      }
+    ],
+    "quiz": [
+      {
+        "pregunta": "Un LLM 'alucina' porque...",
+        "opciones": [
+          "Está roto",
+          "Predice texto plausible, no verdad verificada",
+          "Le falta internet",
+          "Se entrena poco"
+        ],
+        "correcta": 1,
+        "explicacion": "Genera la continuación estadística más plausible; la verificación es humana."
+      },
+      {
+        "pregunta": "El prompt injection consiste en...",
+        "opciones": [
+          "Inyectar código SQL",
+          "Instrucciones ocultas que cambian el comportamiento del modelo",
+          "Robar la API key",
+          "Cifrar el prompt"
+        ],
+        "correcta": 1,
+        "explicacion": "Entrada no confiable que el sistema trata como instrucción de sistema."
+      },
+      {
+        "pregunta": "Grounding en un asistente significa...",
+        "opciones": [
+          "Usar el modelo más grande",
+          "Anclar respuestas a fuentes citadas",
+          "Reducir la temperatura a 0",
+          "Entrenar desde cero"
+        ],
+        "correcta": 1,
+        "explicacion": "Responder solo a partir de material verificable y citarlo."
+      },
+      {
+        "pregunta": "El sobreajuste (overfitting) se describe mejor como...",
+        "opciones": [
+          "El modelo falla en producción",
+          "Memoriza el entrenamiento y no generaliza",
+          "El modelo es lento",
+          "Faltan datos de test"
+        ],
+        "correcta": 1,
+        "explicacion": "Perfecto con lo visto, malo con lo nuevo: no generaliza."
+      },
+      {
+        "pregunta": "Defensa principal contra prompt injection en un producto con IA...",
+        "opciones": [
+          "Pedir amablemente al modelo que ignore instrucciones",
+          "Tratar toda entrada como dato, nunca como instrucción (delimitadores + permisos mínimos)",
+          "Subir la temperatura",
+          "Usar un modelo cerrado"
+        ],
+        "correcta": 1,
+        "explicacion": "La entrada no es confiable: se aísla el contenido y se limita lo que el sistema puede hacer."
+      },
+      {
+        "pregunta": "Un poisoning attack apunta a...",
+        "opciones": [
+          "La API en producción",
+          "Los datos de entrenamiento",
+          "El navegador del usuario",
+          "El servidor de estáticos"
+        ],
+        "correcta": 1,
+        "explicacion": "Corrompe el aprendizaje contaminando el corpus de entrenamiento."
+      }
+    ]
+  },
+  "gobernanza-compliance": {
+    "slug": "gobernanza-compliance",
+    "titulo": "Gobernanza y Compliance Digital",
+    "idioma": "es",
+    "nivel": "universitario",
+    "horas": 40,
+    "descripcion": "Marcos de gobierno de la seguridad (ISO 27001, NIST CSF, ENS), protección de datos con principio de minimización extrema, gestión de riesgo y construcción del expediente de compliance con evidencia.",
+    "objetivos": [
+      "Situar los marcos ISO 27001, NIST CSF y ENS en su papel real",
+      "Aplicar minimización de datos: el usuario como token anónimo",
+      "Construir una matriz de riesgo con tratamiento y dueño",
+      "Producir un expediente de compliance con evidencia verificable"
+    ],
+    "semanas": [
+      {
+        "n": 1,
+        "titulo": "Marcos: ISO 27001, NIST CSF, ENS",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Para qué sirve cada marco",
+            "texto": "ISO 27001: sistema de gestión certificable. NIST CSF: cinco funciones (Identificar, Proteger, Detectar, Responder, Recuperar). ENS: esquema español por categorías. Un marco no es un checklist: es lenguaje común para decidir."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Mapea un control en los tres marcos",
+            "texto": "Elige 'gestión de accesos' y localiza su equivalente en ISO (A.9), CSF (PR.AC) y ENS."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "titulo": "Datos personales y minimización extrema",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "RGPD: base, finalidad, minimización",
+            "texto": "Solo se trata el dato necesario para la finalidad declarada. El máximo de minimización es no tener el dato: el usuario como token anónimo (patrón del ecosistema: uuid local, cero email, cero nombre)."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Rediseña un formulario sin PII",
+            "texto": "Toma un formulario real (registro de curso) y elimina todo dato identificativo innecesario: qué queda, qué se pierde, cómo se sigue dando el servicio."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "titulo": "Gestión de riesgo con dueño y evidencia",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Riesgo = probabilidad x impacto x activo",
+            "texto": "Apreto de riesgo en 4 tratamientos: mitigar, transferir, aceptar, eliminar. Todo riesgo tiene un dueño con nombre y una fecha de revisión."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Matriz de riesgo de la plataforma",
+            "texto": "8 riesgos reales (fuga de material, caída de CDN, abuso de API, token robado...): valora, trata, asigna."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "titulo": "El expediente de compliance",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Sin evidencia no hay compliance",
+            "texto": "El expediente: inventario de activos, matriz de riesgo, políticas vigentes, registros de formación y de incidentes, revisiones firmadas."
+          },
+          {
+            "tipo": "examen",
+            "titulo": "Expediente evaluado",
+            "texto": "Entrega el expediente del caso práctico del curso y defiéndelo: cada afirmación con su evidencia."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "titulo": "Gestion de riesgos (ISO 31000, NIST 800-39)",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Gestion de riesgos (ISO 31000, NIST 800-39)",
+            "texto": "Contenido teorico detallado para gestion de riesgos (iso 31000, nist 800-39). Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Gestion de riesgos (ISO 31000, NIST 800-39)",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para gestion de riesgos (iso 31000, nist 800-39)."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Gestion de riesgos (ISO 31000, NIST 800-39)",
+            "texto": "Analisis de incidente real donde gestion de riesgos (iso 31000, nist 800-39) fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "titulo": "Analisis de impacto en el negocio y BCP",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Analisis de impacto en el negocio y BCP",
+            "texto": "Contenido teorico detallado para analisis de impacto en el negocio y bcp. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Analisis de impacto en el negocio y BCP",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para analisis de impacto en el negocio y bcp."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Analisis de impacto en el negocio y BCP",
+            "texto": "Analisis de incidente real donde analisis de impacto en el negocio y bcp fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "titulo": "Riesgo de terceros y supply chain",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Riesgo de terceros y supply chain",
+            "texto": "Contenido teorico detallado para riesgo de terceros y supply chain. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Riesgo de terceros y supply chain",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para riesgo de terceros y supply chain."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Riesgo de terceros y supply chain",
+            "texto": "Analisis de incidente real donde riesgo de terceros y supply chain fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "titulo": "Ingenieria de privacidad (RGPD, LGPD)",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Ingenieria de privacidad (RGPD, LGPD)",
+            "texto": "Contenido teorico detallado para ingenieria de privacidad (rgpd, lgpd). Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Ingenieria de privacidad (RGPD, LGPD)",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para ingenieria de privacidad (rgpd, lgpd)."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Ingenieria de privacidad (RGPD, LGPD)",
+            "texto": "Analisis de incidente real donde ingenieria de privacidad (rgpd, lgpd) fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "titulo": "Programas de auditoria y assurance",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Programas de auditoria y assurance",
+            "texto": "Contenido teorico detallado para programas de auditoria y assurance. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Programas de auditoria y assurance",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para programas de auditoria y assurance."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Programas de auditoria y assurance",
+            "texto": "Analisis de incidente real donde programas de auditoria y assurance fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "titulo": "Marco de politicas y jerarquia documental",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Marco de politicas y jerarquia documental",
+            "texto": "Contenido teorico detallado para marco de politicas y jerarquia documental. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Marco de politicas y jerarquia documental",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para marco de politicas y jerarquia documental."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Marco de politicas y jerarquia documental",
+            "texto": "Analisis de incidente real donde marco de politicas y jerarquia documental fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 11,
+        "titulo": "Concienciacion y cultura de seguridad",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Concienciacion y cultura de seguridad",
+            "texto": "Contenido teorico detallado para concienciacion y cultura de seguridad. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Concienciacion y cultura de seguridad",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para concienciacion y cultura de seguridad."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Concienciacion y cultura de seguridad",
+            "texto": "Analisis de incidente real donde concienciacion y cultura de seguridad fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 12,
+        "titulo": "Panorama regulatorio sectorial",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Panorama regulatorio sectorial",
+            "texto": "Contenido teorico detallado para panorama regulatorio sectorial. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Panorama regulatorio sectorial",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para panorama regulatorio sectorial."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Panorama regulatorio sectorial",
+            "texto": "Analisis de incidente real donde panorama regulatorio sectorial fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 13,
+        "titulo": "Herramientas GRC y automatizacion",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Herramientas GRC y automatizacion",
+            "texto": "Contenido teorico detallado para herramientas grc y automatizacion. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Herramientas GRC y automatizacion",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para herramientas grc y automatizacion."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Herramientas GRC y automatizacion",
+            "texto": "Analisis de incidente real donde herramientas grc y automatizacion fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 14,
+        "titulo": "Notificacion de incidentes y reporte regulatorio",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Notificacion de incidentes y reporte regulatorio",
+            "texto": "Contenido teorico detallado para notificacion de incidentes y reporte regulatorio. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Notificacion de incidentes y reporte regulatorio",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para notificacion de incidentes y reporte regulatorio."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Notificacion de incidentes y reporte regulatorio",
+            "texto": "Analisis de incidente real donde notificacion de incidentes y reporte regulatorio fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 15,
+        "titulo": "Preparacion para certificaciones (ISO 27001, SOC2)",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Preparacion para certificaciones (ISO 27001, SOC2)",
+            "texto": "Contenido teorico detallado para preparacion para certificaciones (iso 27001, soc2). Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Preparacion para certificaciones (ISO 27001, SOC2)",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para preparacion para certificaciones (iso 27001, soc2)."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Preparacion para certificaciones (ISO 27001, SOC2)",
+            "texto": "Analisis de incidente real donde preparacion para certificaciones (iso 27001, soc2) fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 16,
+        "titulo": "Compliance en cloud y responsabilidad compartida",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Compliance en cloud y responsabilidad compartida",
+            "texto": "Contenido teorico detallado para compliance en cloud y responsabilidad compartida. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Compliance en cloud y responsabilidad compartida",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para compliance en cloud y responsabilidad compartida."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Compliance en cloud y responsabilidad compartida",
+            "texto": "Analisis de incidente real donde compliance en cloud y responsabilidad compartida fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 17,
+        "titulo": "Metricas y reporte al consejo",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Metricas y reporte al consejo",
+            "texto": "Contenido teorico detallado para metricas y reporte al consejo. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Metricas y reporte al consejo",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para metricas y reporte al consejo."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Metricas y reporte al consejo",
+            "texto": "Analisis de incidente real donde metricas y reporte al consejo fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 18,
+        "titulo": "Gestion de crisis y wargaming",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Gestion de crisis y wargaming",
+            "texto": "Contenido teorico detallado para gestion de crisis y wargaming. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Gestion de crisis y wargaming",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para gestion de crisis y wargaming."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Gestion de crisis y wargaming",
+            "texto": "Analisis de incidente real donde gestion de crisis y wargaming fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 19,
+        "titulo": "Regulaciones emergentes: AI Act, CRA, DSA",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Regulaciones emergentes: AI Act, CRA, DSA",
+            "texto": "Contenido teorico detallado para regulaciones emergentes: ai act, cra, dsa. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Regulaciones emergentes: AI Act, CRA, DSA",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para regulaciones emergentes: ai act, cra, dsa."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Regulaciones emergentes: AI Act, CRA, DSA",
+            "texto": "Analisis de incidente real donde regulaciones emergentes: ai act, cra, dsa fue factor clave. Lecciones aprendidas."
+          }
+        ]
+      },
+      {
+        "n": 20,
+        "titulo": "Capstone: Construir programa GRC desde cero",
+        "lecciones": [
+          {
+            "tipo": "lectura",
+            "titulo": "Teoria: Capstone: Construir programa GRC desde cero",
+            "texto": "Contenido teorico detallado para capstone: construir programa grc desde cero. Incluye frameworks, comandos y referencias."
+          },
+          {
+            "tipo": "ejercicio",
+            "titulo": "Practica guiada: Capstone: Construir programa GRC desde cero",
+            "texto": "Ejercicio paso a paso (8-10 pasos) con comandos exactos, salidas esperadas y troubleshooting para capstone: construir programa grc desde cero."
+          },
+          {
+            "tipo": "caso",
+            "titulo": "Caso real: Capstone: Construir programa GRC desde cero",
+            "texto": "Analisis de incidente real donde capstone: construir programa grc desde cero fue factor clave. Lecciones aprendidas."
+          },
+          {
+            "tipo": "proyecto",
+            "titulo": "Proyecto integrador: Capstone: Construir programa GRC desde cero",
+            "texto": "Proyecto final que integra todos los conocimientos del curso."
+          }
+        ]
+      }
+    ],
+    "quiz": [
+      {
+        "pregunta": "Las cinco funciones del NIST CSF son...",
+        "opciones": [
+          "Planificar, Hacer, Verificar, Actuar",
+          "Identificar, Proteger, Detectar, Responder, Recuperar",
+          "Analizar, Diseñar, Desarrollar, Testear, Desplegar",
+          "Prevenir, Curar, Paliar, Documentar, Auditar"
+        ],
+        "correcta": 1,
+        "explicacion": "El ciclo de vida del CSF cubre gobierno y operación de la seguridad."
+      },
+      {
+        "pregunta": "La minimización extrema de datos significa...",
+        "opciones": [
+          "Cifrar todo dos veces",
+          "No tener el dato cuando el servicio puede funcionar sin él",
+          "Guardar solo 30 días",
+          "Anonimizar al administrador"
+        ],
+        "correcta": 1,
+        "explicacion": "El dato que no existe no puede filtrarse: usuario como token anónimo."
+      },
+      {
+        "pregunta": "Los cuatro tratamientos de riesgo son...",
+        "opciones": [
+          "Mitigar, transferir, aceptar, eliminar",
+          "Comprar, vender, alquilar, donar",
+          "Detectar, analizar, contener, reportar",
+          "Alto, medio, bajo, nulo"
+        ],
+        "correcta": 0,
+        "explicacion": "Todo riesgo se trata con una de esas cuatro decisiones y un dueño."
+      },
+      {
+        "pregunta": "El principio de finalidad (RGPD) exige que...",
+        "opciones": [
+          "Los datos duren 10 años",
+          "Solo se usen para lo declarado al recogerlos",
+          "Se cifren dos veces",
+          "Los guarde el DPO"
+        ],
+        "correcta": 1,
+        "explicacion": "Uso posterior incompatible con la finalidad declarada = nuevo tratamiento que requiere base."
+      },
+      {
+        "pregunta": "Un registro de tratamiento NO debe contener...",
+        "opciones": [
+          "Finalidad y categorías de datos",
+          "Plazos de supresión",
+          "Medidas de seguridad",
+          "La lista de clientes con nombres reales para 'por si acaso'"
+        ],
+        "correcta": 3,
+        "explicacion": "Guardar datos 'por si acaso' viola la minimización: exactamente lo que evita Secure T."
+      },
+      {
+        "pregunta": "'Sin evidencia no hay compliance' significa...",
+        "opciones": [
+          "Que hay que comprar un SIEM",
+          "Que cada afirmación del expediente debe tener un artefacto verificable",
+          "Que firme el CEO",
+          "Que exista un PDF"
+        ],
+        "correcta": 1,
+        "explicacion": "Un expediente es una cadena de afirmaciones → artefactos (logs, revisiones, matrices), no un PDF bonito."
+      }
+    ]
+  }
+}

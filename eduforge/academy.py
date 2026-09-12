@@ -165,6 +165,18 @@ _CURSO_CSS = """\
     .quiz-opciones button.fallo { border-color: var(--danger); }
     @media (max-width: 48rem) { .curso-layout { grid-template-columns: 1fr; }
       .curso-nav { position: static; } }
+    #barra-lectura { position: fixed; top: 0; left: 0; height: 3px; width: 0;
+      background: var(--accent); z-index: 60; }
+    .controles { display: flex; gap: var(--sp-2); align-items: center; }
+    .controles button { border: 1px solid var(--border); background: transparent;
+      color: var(--text-2); border-radius: var(--r-sm); min-width: 2.2rem;
+      min-height: 2.2rem; cursor: pointer; font: 600 var(--fs-sm) var(--font-mono); }
+    .controles button:hover { border-color: var(--accent); color: var(--accent); }
+    .sem-nav { display: flex; justify-content: space-between; gap: var(--sp-4);
+      margin-top: var(--sp-6); padding-top: var(--sp-4);
+      border-top: 1px dashed var(--border); }
+    .sem-nav a { color: var(--accent); text-decoration: none; }
+    .sem-nav a:hover { text-decoration: underline; }
   </style>"""
 
 
@@ -179,16 +191,24 @@ def _quiz_player_js(items: list[dict], slug: str) -> str:
     const qf = document.getElementById('q-feedback');
     const qm = document.getElementById('q-marcador');
     const qb = document.getElementById('q-next');
+    function barajar(a) {{
+      for (let i = a.length - 1; i > 0; i--) {{
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }}
+      return a;
+    }}
     function render() {{
       const q = QUIZ[qi];
       qt.textContent = (qi + 1) + '/' + QUIZ.length + ' · ' + q.pregunta;
       qo.innerHTML = ''; qf.textContent = ''; qb.hidden = true;
-      q.opciones.forEach((o, i) => {{
+      const orden = baraja(q.opciones.map((_, i) => i));
+      orden.forEach(i => {{
         const b = document.createElement('button');
-        b.textContent = o;
+        b.textContent = q.opciones[i];
         b.onclick = () => {{
-          [...qo.children].forEach((el, j) => {{
-            el.classList.add(j === q.correcta ? 'correcta' : 'fallo');
+          [...qo.children].forEach(el => {{
+            el.classList.add(el.dataset.i == q.correcta ? 'correcta' : 'fallo');
             el.disabled = true;
           }});
           const ok = i === q.correcta;
@@ -197,6 +217,7 @@ def _quiz_player_js(items: list[dict], slug: str) -> str:
           qm.textContent = 'Aciertos: ' + score;
           qb.hidden = false;
         }};
+        b.dataset.i = i;
         qo.appendChild(b);
       }});
     }}
@@ -216,6 +237,10 @@ def _quiz_player_js(items: list[dict], slug: str) -> str:
       }} else {{
         qf.textContent = 'Repasa las semanas y vuelve a intentarlo (se supera con 70 %).';
       }}
+      const re = document.createElement('button');
+      re.className = 'btn'; re.textContent = 'Reintentar quiz';
+      re.onclick = () => {{ qi = 0; score = 0; re.remove(); render(); }};
+      qm.after(re);
     }}
     render();
     // nav activa al hacer scroll
@@ -225,7 +250,46 @@ def _quiz_player_js(items: list[dict], slug: str) -> str:
         a.classList.toggle('activo', a.getAttribute('href') === '#' + e.target.id));
     }}), {{ rootMargin: '-30% 0px -60% 0px' }});
     document.querySelectorAll('main section[id]').forEach(s => io.observe(s));
+    // controles: tema claro/oscuro (mismo interruptor que la landing), A-/A+ y barra de lectura
+    const root = document.documentElement;
+    try {{ root.dataset.theme = localStorage.getItem('stt-theme') || 'dark'; }} catch (e) {{}}
+    document.getElementById('tema-btn').onclick = () => {{
+      root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+      try {{ localStorage.setItem('stt-theme', root.dataset.theme); }} catch (e) {{}}
+    }};
+    let fs = 1;
+    try {{ fs = parseFloat(localStorage.getItem('stt-fs')) || 1; }} catch (e) {{}}
+    const aplicarFs = () => {{
+      root.style.fontSize = (fs * 100) + '%';
+      try {{ localStorage.setItem('stt-fs', String(fs)); }} catch (e) {{}}
+    }};
+    aplicarFs();
+    document.getElementById('fs-mas').onclick = () => {{ fs = Math.min(1.3, fs + 0.1); aplicarFs(); }};
+    document.getElementById('fs-menos').onclick = () => {{ fs = Math.max(0.85, fs - 0.1); aplicarFs(); }};
+    const barra = document.getElementById('barra-lectura');
+    addEventListener('scroll', () => {{
+      const h = document.documentElement;
+      barra.style.width = ((h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 || 0) + '%';
+    }}, {{ passive: true }});
   </script>"""
+
+
+def _semanas_html(curso: dict) -> str:
+    total = len(curso["semanas"])
+    bloques = []
+    for s in curso["semanas"]:
+        n = s["n"]
+        previo = (f'<a href="#semana-{n - 1}">← Semana {n - 1}</a>'
+                  if n > 1 else "<span></span>")
+        siguiente = (f'<a href="#semana-{n + 1}">Semana {n + 1} →</a>'
+                     if n < total else
+                     '<a href="#quiz">Quiz del curso →</a>')
+        bloques.append(
+            f'    <section id="semana-{n}">\n'
+            f'{_render(_md_semana(curso, s))}\n'
+            f'      <nav class="sem-nav" aria-label="Semana anterior y siguiente">'
+            f'{previo}{siguiente}</nav>\n    </section>')
+    return "\n".join(bloques)
 
 
 def _html_curso(curso: dict, datos: dict) -> str:
@@ -234,9 +298,7 @@ def _html_curso(curso: dict, datos: dict) -> str:
         if len(s["titulo"]) > 38 else
         f'      <a href="#semana-{s["n"]}">Semana {s["n"]} · {s["titulo"]}</a>'
         for s in curso["semanas"])
-    semanas_html = "\n".join(
-        f'    <section id="semana-{s["n"]}">\n{_render(_md_semana(curso, s))}\n    </section>'
-        for s in curso["semanas"])
+    semanas_html = _semanas_html(curso)
     objetivos = "".join(f"<li>{o}</li>" for o in curso["objetivos"])
     lab = datos["laboratorio"]
     return f"""<!doctype html>
@@ -252,8 +314,14 @@ def _html_curso(curso: dict, datos: dict) -> str:
 <header class="topbar"><div class="bar">
   <a class="brand" href="../../index.html">← Campus</a>
   <span class="brand"><span>{curso['titulo'][:40]}</span></span>
-  <a class="btn" href="../../progreso.html">Mi progreso</a>
+  <div class="controles no-print">
+    <button id="fs-menos" aria-label="Reducir tamaño de letra">A−</button>
+    <button id="fs-mas" aria-label="Aumentar tamaño de letra">A+</button>
+    <button id="tema-btn" aria-label="Cambiar tema claro u oscuro">◐</button>
+    <a class="btn" href="../../progreso.html">Mi progreso</a>
+  </div>
 </div></header>
+<div id="barra-lectura" aria-hidden="true"></div>
 <div class="curso-layout">
   <nav class="curso-nav" aria-label="Secciones del curso">
       <a href="#overview">Overview</a>
@@ -1024,18 +1092,28 @@ def _html_buscar(repo: str) -> str:
   <p class="meta" id="count"></p>
   <div class="grid-cur" id="res"></div>
 </main>
+<script src="vendor/fuse.min.js"></script>
 <script>
 let INDICE = [];
-fetch("indice.json").then(r => r.json()).then(d => INDICE = d)
-  .catch(() => document.getElementById("count").textContent =
-    "Índice no disponible (¿offline?).");
+let fuse = null;
+fetch("indice.json").then(r => r.json()).then(d => {{
+  INDICE = d;
+  if (window.Fuse) {{
+    fuse = new Fuse(d, {{ keys: ["titulo", "resumen", "tags"],
+      threshold: 0.35, ignoreLocation: true }});
+  }}
+}}).catch(() => document.getElementById("count").textContent =
+  "Índice no disponible (¿offline?).");
 
 function normalizar(s) {{
   return s.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g, "");
 }}
 function pintar(q) {{
   const nq = normalizar(q.trim());
-  const res = !nq ? [] : INDICE.filter(p =>
+  let res;
+  if (!nq) res = [];
+  else if (fuse) res = fuse.search(q, {{ limit: 40 }}).map(r => r.item);
+  else res = INDICE.filter(p =>
     normalizar(p.titulo + " " + p.resumen + " " + p.tags).includes(nq)).slice(0, 40);
   document.getElementById("count").textContent =
     !nq ? "Escribe para buscar." :
