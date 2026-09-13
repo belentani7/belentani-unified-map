@@ -28,3 +28,7 @@ Thumbs.db
 .DS_Store
 desktop.ini
 *.mimosa/
+
+# copias de seguridad locales: nunca van al repo
+*.backup
+*.bak

@@ -111,18 +111,26 @@ Ver [recursos.md](recursos.md) — bancos abiertos + Drive do Pobre.
 
 def _md_semana(curso, semana) -> str:
     from eduforge.didactico import material as _mat
+    from eduforge.profundidad import PROFUNDIDAD
     rico = _mat(curso["slug"], semana["n"])
     if rico:
         return _md_semana_rica(curso, semana, rico)
     lec = "\n\n".join(
         f"## {l['tipo'].upper()}: {l['titulo']}\n\n{l['texto']}"
         for l in semana["lecciones"])
+    # capa de profundidad: semanas con lectura densa + práctica guiada
+    prof = PROFUNDIDAD.get(curso["slug"], {}).get(semana["n"])
+    extra = ""
+    if prof:
+        extra = (f"\n## 🎯 Objetivo de la semana\n\n{prof['objetivo']}\n\n"
+                 f"## 📖 Lectura principal\n\n{prof['lectura']}\n\n"
+                 f"## 🛠️ Práctica guiada\n\n{prof['practica']}\n")
     return f"""# Semana {semana['n']}: {semana['titulo']}
 
 Curso: [{curso['titulo']}](../syllabus.md) · Semana {semana['n']} de {len(curso['semanas'])}
 
 {lec}
-
+{extra}
 ---
 [Volver al syllabus](../syllabus.md)
 """

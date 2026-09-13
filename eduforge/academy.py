@@ -985,6 +985,10 @@ def _html_credencial(repo: str) -> str:
     opciones = "\n".join(
         f'    <option value="{slug}">{content.CURSOS[slug]["titulo"]}</option>'
         for slug in REPO_COURSES.get(repo, []))
+    requisitos = {slug: [f"semana-{s['n']:02d}" for s in content.CURSOS[slug]["semanas"]]
+                  + ["quiz", "laboratorio", "proyecto", "examen"]
+                  for slug in REPO_COURSES.get(repo, [])}
+    req_json = json.dumps(requisitos, ensure_ascii=False)
     return f"""<!doctype html>
 <html lang="es">
 <head>
@@ -1004,7 +1008,9 @@ def _html_credencial(repo: str) -> str:
   <p class="t2">Al superar un curso con evidencia, generas aquí tu credencial. El sello es
   un <strong>SHA-256</strong> calculado en tu navegador: cualquiera puede verificarlo
   recomputando el hash, sin servidor y sin confiar en nosotros.</p>
-  <p class="meta">Fase actual: sello hash verificable offline. Anclaje en blockchain: fase 2 (roadmap).</p>
+  <p class="meta">Anti-atajo: el sellado comprueba tu progreso local (semanas, quiz,
+  laboratorio, proyecto y examen completos). Revisión humana de evidencias: PLANNED.
+  Fase actual: sello hash verificable offline. Anclaje en blockchain: fase 2 (roadmap).</p>
 
   <h2 id="generar">Generar</h2>
   <label class="meta">Curso superado</label>
@@ -1025,6 +1031,7 @@ def _html_credencial(repo: str) -> str:
   <div class="resultado" id="veredicto" hidden></div>
 </main>
 <script>
+const REQUISITOS = {req_json};
 async function sha256(txt) {{
   const buf = await crypto.subtle.digest("SHA-256",
     new TextEncoder().encode(txt));
@@ -1041,6 +1048,19 @@ document.getElementById("sellar").onclick = async () => {{
   const out = document.getElementById("salida");
   if (!t || !e) {{ out.hidden = false; out.innerHTML =
     '<span class="mal">Falta token o evidencia.</span>'; return; }}
+  // anti-atajo: sin recorrido completo no hay sello (verificación local)
+  const req = REQUISITOS[c] || [];
+  let est = {{}};
+  try {{ est = JSON.parse(localStorage.getItem("stt-progreso") || "{{}}"); }} catch (err) {{}}
+  const faltan = req.filter(r => !est[c + "/" + r]);
+  if (faltan.length) {{
+    out.hidden = false;
+    out.innerHTML = '<span class="mal">Recorrido incompleto: faltan ' + faltan.length +
+      ' de ' + req.length + ' hitos (' + faltan.slice(0, 3).join(", ") +
+      (faltan.length > 3 ? "…" : "") + '). Completa semanas, quiz, laboratorio,' +
+      ' proyecto y examen (progreso.html). La credencial exige el trabajo.</span>';
+    return;
+  }}
   const f = new Date().toISOString().slice(0, 10);
   const sello = await sha256(canonico(c, t, e, f));
   const bloque = {{v: 1, curso: c, token: t.slice(0, 8) + "…", evidencia: e,
@@ -1235,8 +1255,15 @@ _HTML_404 = """<!doctype html>
 <div class="box">
   <h1>404</h1>
   <p>Esta página não existe. · Esta página no existe. · This page does not exist.</p>
-  <p><a href="/">← início</a> · <a href="/campus/">campus →</a></p>
+  <p><a href="#" id="ir-inicio">← início</a> · <a href="#" id="ir-campus">campus →</a></p>
 </div>
+<script>
+  // rutas seguras bajo subpath (project pages): base derivada de la URL real
+  var base = location.pathname.replace(/\/[^/]*\/?$/, "");
+  if (!/(secure-t-university)$/i.test(base)) base = "";
+  document.getElementById("ir-inicio").href = (base || ".") + "/";
+  document.getElementById("ir-campus").href = (base || ".") + "/campus/";
+</script>
 </body>
 </html>
 """
