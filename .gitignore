@@ -32,3 +32,11 @@ desktop.ini
 # copias de seguridad locales: nunca van al repo
 *.backup
 *.bak
+# remediacion 2026-09-14
+node_modules/
+.env
+.env.*
+.mimosa/
+__pycache__/
+.vercel/
+*.log
